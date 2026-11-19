@@ -1,5 +1,5 @@
 const { chromium } = require('playwright-core');
-const { spawn } = require('node:child_process');
+const { spawn, execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const delay = ms => new Promise(r => setTimeout(r, ms));
 const repo = 'https://github.com/xuanqing-95/pipeline-xhs-harness-downloads';
@@ -32,18 +32,25 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
    if(stage==='dialog'){
     const input=pg.getByPlaceholder(/whale-pet/i);
     if(!await visible(input))continue;
-    await input.first().fill(repo);await shot('01-add-plugin');
+    execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command', "Set-Clipboard -Value '"+repo+"'"]);
+    await input.first().focus();await input.first().press('Control+v');
+    if(await input.first().inputValue()!==repo)throw Error('Clipboard paste mismatch');await shot('01-add-plugin');
     const install=pg.getByRole('button',{name:/^(Install|安装)$/i});
     await install.last().click();stage='installing';continue;
    }
    if(stage==='installing'){
+    const enable=pg.getByRole('button',{name:/^(Enable now|立即启用|现在启用)$/i});
+    if(await visible(enable)){await shot('02-installed');await enable.first().click();stage='enabled';continue;}
+   }
+   if(stage==='enabled'){
     const panel=pg.getByText(/Pipeline\s*[|｜]\s*小红书内容生成/);
-    if(await visible(panel)){await shot('02-installed');await panel.first().click();stage='open';continue;}
+    if(await visible(panel)){await shot('03-enabled');await panel.first().click();stage='open';continue;}
+    const more=pg.getByRole('button',{name:/^(More|更多)$/i}); if(i%8===0 && await visible(more))await more.first().click();
     const confirm=pg.getByRole('button',{name:/^(Confirm|Confirm installation|确认安装|确认)$/i});
     if(await visible(confirm))await confirm.last().click();
    }
-   if(stage==='open' && /登录|邮箱|邮箱地址|Email/i.test(body) && /Pipeline|派獭/i.test(body)){
-    await shot('03-plugin-open');fs.writeFileSync(out+'/result.json',JSON.stringify({platform:process.platform,repository:repo,result:'installed and opened via Windows desktop UI'}));report('PASS: Installed from GitHub and opened plugin login');return;
+   if(stage==='open' && await visible(pg.locator('input[type=password]')) && /Pipeline/.test(body)){
+    await shot('04-plugin-open');fs.writeFileSync(out+'/result.json',JSON.stringify({platform:process.platform,repository:repo,result:'installed and opened via Windows desktop UI'}));report('PASS: Installed from GitHub and opened plugin login');return;
    }
   }
   await delay(1300);
