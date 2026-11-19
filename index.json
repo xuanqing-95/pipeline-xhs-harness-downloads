@@ -38,6 +38,18 @@
       },
       "versions": [
         {
+          "version": "0.5.4-beta.33.2",
+          "publishTimestamp": 1795081242,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/xuanqing-95/pipeline-xhs-harness-downloads",
+            "commit": "91808a08ce106af7f6771eb4c2009cb5cebdcdd6"
+          },
+          "engines": {
+            "dsh": ">=0.2.2-rc.1 <0.2.3-0"
+          }
+        },
+        {
           "version": "0.5.4-beta.33.1",
           "publishTimestamp": 1795069809,
           "source": {
