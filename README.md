@@ -2,6 +2,10 @@
 
 把一个主题、几行草稿或收藏的参考笔记，做成可编辑的小红书笔记。插件在 DeepSeek Harness 里生成标题、正文和配图，支持预览、复制和下载，最后由你检查并发布。
 
+[![安装到 Harness（Mac）](docs/examples/install-mac.svg)](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest/download/Pipeline-XHS-Mac.zip)
+
+下载后解压，双击「安装小红书插件.command」，按提示完成安装。
+
 [看产品示例与安装图文说明](https://xuanqing-95.github.io/pipeline-xhs-harness-downloads/)
 
 ## 工作台长什么样？
@@ -29,4 +33,3 @@ https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/download/
 
 打开侧栏的插件，登录或注册自己的 Pipeline 账号。在「原创创作」选主题或粘贴草稿，例如「周末野餐要带什么」，生成文案并检查，再选风格生成配图。完成后预览笔记、复制正文、下载图片，到小红书发布。生成使用 Pipeline 积分。收藏原帖另需浏览器收藏扩展。
 
-[Mac 双击安装包（备用）](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest/download/Pipeline-XHS-Mac.zip)
