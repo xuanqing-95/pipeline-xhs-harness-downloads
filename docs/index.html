@@ -27,10 +27,10 @@ section.block{border-top:1px solid var(--line);padding:clamp(36px,6vw,70px) 0}.g
 <figure><img src="examples/knowledge.png" alt="玄清知识图卡的风格样张" loading="lazy"><figcaption>玄清知识图卡</figcaption></figure>
 <figure><img src="examples/comic.webp" alt="Social Comic 条漫的风格样张" loading="lazy"><figcaption>Social Comic 条漫</figcaption></figure></div></section>
 <section class="block split" id="install"><div><h2>安装到 Harness</h2><p class="intro">还没有 Harness？先从 <a href="https://www.deepseek.com/harness/zh/">DeepSeek 官网</a>获取桌面客户端。</p></div><div class="body">
-<h3>先在「插件 → 发现」里搜</h3><p>搜索 <strong>小红书内容生成</strong>，找到 <strong>Pipeline｜小红书内容生成</strong>，核对作者「玄清」，点「安装」并确认。</p>
-<details><summary>没看到「发现」，或者搜不到？</summary><p>打开「插件 → 实验性插件」，启用「自定义插件索引」。回到「发现 → 添加索引源」，粘贴下面的地址，选中新添加的来源，再搜插件名。</p>
+<h3>第一次安装</h3><p>点击「复制安装地址」，打开 Harness 的「插件 → 添加插件」，粘贴地址并确认安装。</p><div class="copyrow"><input id="package-url" aria-label="插件安装地址" readonly value="https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/download/v0.5.4-beta.33/Pipeline-XHS-Harness.tgz"><button type="button" data-copy="package-url">复制安装地址</button></div>
+<details><summary>已经在用「插件 → 发现」？</summary><p>在收录本插件的来源中搜索 <strong>小红书内容生成</strong>，找到 <strong>Pipeline｜小红书内容生成</strong>，核对作者「玄清」，点「安装」并确认。</p>
+<p>如果搜不到，想把本插件加入「发现」，打开「插件 → 实验性插件」，启用「自定义插件索引」。回到「发现 → 添加索引源」，粘贴下面的地址，选中新添加的来源，再搜插件名。</p>
 <div class="copyrow"><input id="index-url" aria-label="插件索引地址" readonly value="https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json"><button type="button" data-copy="index-url">复制地址</button></div></details>
-<details><summary>我想直接从「添加插件」安装</summary><p>复制下面的安装地址，在 Harness 的「插件 → 添加插件」里粘贴，按提示确认即可。</p><div class="copyrow"><input id="package-url" aria-label="插件安装地址" readonly value="https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/download/v0.5.4-beta.33/Pipeline-XHS-Harness.tgz"><button type="button" data-copy="package-url">复制地址</button></div></details>
 <details><summary>Mac 安装包在哪里？</summary><p><a href="https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest/download/Pipeline-XHS-Mac.zip">下载 Mac 安装包</a>，解压后双击「安装小红书插件.command」，按安装窗口提示继续。</p></details>
 <p class="sr" aria-live="polite" id="copy-status"></p></div></section>
 <section class="block split" id="start"><div><h2>做出你的第一篇笔记</h2><p class="intro">只有一个想法也可以开始。写到哪一步，都可以从「任务池」查看进度和成品。</p></div><div class="body"><ol class="steps">
