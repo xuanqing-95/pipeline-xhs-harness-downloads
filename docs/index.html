@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline｜小红书内容生成 · 插件介绍与安装</title>
+<meta name="description" content="在 DeepSeek Harness 里把主题或草稿写成小红书笔记，选风格生成配图，预览后发布。查看插件示例、安装方法和首次使用指南。">
+<style>
+:root{font-family:"DM Sans",Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft Yahei",sans-serif;color:#182838;background:#f9faf8;--ink:#182838;--muted:#425666;--line:#d6dedd;--wash:#e8efed;--blue:#263f54;scroll-behavior:smooth}
+*{box-sizing:border-box}body{margin:0;line-height:1.65}a{color:var(--blue);text-underline-offset:.22em}a:hover{text-decoration-thickness:2px}button,input{font:inherit}button{cursor:pointer}a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #276db2;outline-offset:3px}
+main,header .wrap,footer .wrap{width:min(1110px,calc(100% - 52px));margin:auto}header{border-bottom:1px solid var(--line)}header .wrap,footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+.brand{display:inline-flex;align-items:center;gap:8px;color:var(--ink);font-weight:740;text-decoration:none;letter-spacing:-.025em}.brand img{width:32px;height:32px;object-fit:contain}.toplink{font-size:.9rem;text-decoration:none}.toplink:hover{text-decoration:underline}
+h1,h2,h3,p,figure{margin:0}h1,h2,h3{line-height:1.25;text-wrap:balance}h1{font-size:clamp(2.45rem,5.1vw,4.8rem);letter-spacing:-.075em}h2{font-size:clamp(1.75rem,3.4vw,2.7rem);letter-spacing:-.055em}h3{font-size:1.12rem}.intro{color:var(--muted);margin-top:16px;max-width:38em}.hero{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:clamp(28px,6vw,82px);padding:clamp(40px,7vw,88px) 0}
+.hero .intro{font-size:clamp(1rem,1.65vw,1.15rem);max-width:29em}.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:28px}.primary,.secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 18px;border-radius:9px;text-decoration:none;font-weight:650}.primary{background:var(--ink);color:white}.primary:hover{background:#31485a}.secondary{color:var(--ink);border:1px solid var(--line);background:white}.secondary:hover{background:var(--wash)}.hero small{display:block;color:var(--muted);margin-top:12px}
+.sample{padding:clamp(22px,3.5vw,44px);background:var(--wash);border-radius:20px}.sample small,.mini{font-size:.8rem;color:var(--muted);font-weight:650}.sample h3{margin:14px 0 10px;font-size:clamp(1.4rem,2.4vw,2rem);letter-spacing:-.035em}.sample p{color:var(--muted)}.sample article{background:#fff;border:1px solid #d7e1dc;border-radius:12px;padding:18px;margin-top:18px}.sample article strong{display:block;margin:6px 0}
+section.block{border-top:1px solid var(--line);padding:clamp(36px,6vw,70px) 0}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,2.5vw,28px);margin-top:24px}.gallery figure{border-radius:12px;overflow:hidden;background:#fff;border:1px solid var(--line)}.gallery img{display:block;width:100%;height:clamp(180px,27vw,332px);object-fit:contain;background:#f5f5f0}.gallery figcaption{padding:10px 14px;font-weight:650;font-size:.92rem}
+.split{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,6vw,74px)}.body{color:var(--muted)}.body p+p{margin-top:12px}.body h3{color:var(--ink);margin:20px 0 8px}.body h3:first-child{margin-top:0}.body strong{color:var(--ink)}details{border-bottom:1px solid var(--line);padding:12px 0}summary{color:var(--ink);cursor:pointer;font-weight:650;padding:5px 0}details p{margin:7px 0}.copyrow{display:flex;gap:6px;margin:12px 0;align-items:stretch}.copyrow input{min-width:0;flex:1;padding:8px 10px;border-radius:6px;border:1px solid #b5c1c4;background:white;font-size:.84rem;color:var(--ink)}.copyrow button{border:0;border-radius:6px;background:var(--blue);color:white;padding:8px 14px;white-space:nowrap}.copyrow button:hover{background:#3a566d}.steps{margin:0;padding-left:1.5em}.steps li{padding-left:4px;margin-bottom:16px}.steps li::marker{font-weight:700;color:var(--blue)}footer{border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}footer .wrap{padding:20px 0}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:730px){main,header .wrap,footer .wrap{width:calc(100% - 32px)}.hero,.split{grid-template-columns:1fr}.hero{gap:24px}.sample{padding:20px}.gallery{gap:6px}.gallery img{height:clamp(120px,36vw,220px)}.gallery figcaption{font-size:.78rem;padding:7px}.actions{margin-top:20px}}
+@media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}}
+</style>
+</head>
+<body><header><div class="wrap"><a class="brand" href="#top"><img src="https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/icon.png" alt="" width="32" height="32">Pipeline</a><a class="toplink" href="#start">第一次使用</a></div></header>
+<main id="top">
+<section class="hero" aria-labelledby="title"><div><h1 id="title">小红书内容生成</h1><p class="intro">把一个选题或一段草稿，做成有标题、正文和配图的小红书笔记。在 DeepSeek Harness 里就能写、选图和预览。</p><div class="actions"><a class="primary" href="#install">在 Harness 中安装 ↓</a><a class="secondary" href="#styles">看看配图效果</a></div><small>使用自己的 Pipeline 账号，生成内容使用 Pipeline 积分。</small></div>
+<div class="sample"><small>创作示例</small><h3>想分享一个 AI 小技巧？</h3><p>在「原创创作」输入：怎样让 AI 帮我梳理下周的任务？</p><article><small>一种笔记写法</small><strong>我让 AI 帮我排下周，先给了它这三样东西</strong><p>我把任务、截止时间和可用时段写成一张清单。遇上排不下的事，先请它标出冲突，再由我决定挪哪一项。</p></article></div></section>
+<section class="block" id="styles"><h2>给同一篇笔记，选一种画法</h2><p class="intro">下面是插件内的配图风格示例。文案完成后，可以选择画法生成配图，再到详情页预览图文排在一起的样子。</p><div class="gallery">
+<figure><img src="examples/cartoon.png" alt="通用卡通配图的风格样张" loading="lazy"><figcaption>通用卡通配图</figcaption></figure>
+<figure><img src="examples/knowledge.png" alt="玄清知识图卡的风格样张" loading="lazy"><figcaption>玄清知识图卡</figcaption></figure>
+<figure><img src="examples/comic.webp" alt="Social Comic 条漫的风格样张" loading="lazy"><figcaption>Social Comic 条漫</figcaption></figure></div></section>
+<section class="block split" id="install"><div><h2>安装到 Harness</h2><p class="intro">还没有 Harness？先从 <a href="https://www.deepseek.com/harness/zh/">DeepSeek 官网</a>获取桌面客户端。</p></div><div class="body">
+<h3>先在「插件 → 发现」里搜</h3><p>搜索 <strong>小红书内容生成</strong>，找到 <strong>Pipeline｜小红书内容生成</strong>，核对作者「玄清」，点「安装」并确认。</p>
+<details><summary>没看到「发现」，或者搜不到？</summary><p>打开「插件 → 实验性插件」，启用「自定义插件索引」。回到「发现 → 添加索引源」，粘贴下面的地址，选中新添加的来源，再搜插件名。</p>
+<div class="copyrow"><input id="index-url" aria-label="插件索引地址" readonly value="https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json"><button type="button" data-copy="index-url">复制地址</button></div></details>
+<details><summary>我想直接从「添加插件」安装</summary><p>复制下面的安装地址，在 Harness 的「插件 → 添加插件」里粘贴，按提示确认即可。</p><div class="copyrow"><input id="package-url" aria-label="插件安装地址" readonly value="https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/download/v0.5.4-beta.33/Pipeline-XHS-Harness.tgz"><button type="button" data-copy="package-url">复制地址</button></div></details>
+<details><summary>Mac 安装包在哪里？</summary><p><a href="https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest/download/Pipeline-XHS-Mac.zip">下载 Mac 安装包</a>，解压后双击「安装小红书插件.command」，按安装窗口提示继续。</p></details>
+<p class="sr" aria-live="polite" id="copy-status"></p></div></section>
+<section class="block split" id="start"><div><h2>做出你的第一篇笔记</h2><p class="intro">只有一个想法也可以开始。写到哪一步，都可以从「任务池」查看进度和成品。</p></div><div class="body"><ol class="steps">
+<li><strong>打开插件，登录 Pipeline。</strong> 在 Harness 侧栏点击插件名称。首次使用可以在登录页注册并验证邮箱，到「品牌管理」填写你的账号定位，例如“给上班族分享 AI 工具”。</li>
+<li><strong>写下选题或粘贴草稿。</strong> 在「原创创作」选「主题」或「草稿」，输入想写的内容，选择文案专家，点击「生成文案」。可以先到「账户积分」查看余额。</li>
+<li><strong>生成配图，预览成稿。</strong> 文案完成后选择配图风格并生成。在任务池进入详情，检查标题、正文和笔记预览。</li>
+<li><strong>发布到自己的小红书账号。</strong> 复制文案、下载配图，到小红书核对排版后确认发布。</li></ol><details><summary>想从收藏的原帖开始写？</summary><p>打开「收藏库」，按页面指引安装配套的浏览器收藏扩展。在浏览器收藏原帖后，回到收藏库选择「开始仿写」，生成自己的版本。</p></details></div></section>
+</main><footer><div class="wrap"><span>玄清 · Pipeline</span><a href="https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases">版本与下载</a></div></footer>
+<script>
+const status = document.getElementById('copy-status');
+for (const button of document.querySelectorAll('[data-copy]')) {
+  button.addEventListener('click', async () => {
+    const input = document.getElementById(button.dataset.copy);
+    try {
+      await navigator.clipboard.writeText(input.value);
+      button.textContent = '已复制';
+      status.textContent = input.getAttribute('aria-label') + '已复制';
+    } catch {
+      input.focus(); input.select();
+      button.textContent = '请手动复制';
+      status.textContent = '地址已选中，请使用系统复制操作。';
+    }
+  });
+}
+</script></body></html>

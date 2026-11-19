@@ -1,13 +1,22 @@
 # Pipeline｜小红书内容生成
 
-[下载 Mac 安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest/download/Pipeline-XHS-Mac.zip)
+把一个主题、几行草稿或收藏的参考笔记，做成可编辑的小红书笔记。插件在 DeepSeek Harness 里生成标题、正文和配图，支持预览、复制和下载，最后由你检查并发布。
 
-在 DeepSeek Harness 中创作小红书文案、生成配图并管理收藏和任务。
+[看产品示例与安装图文说明](https://xuanqing-95.github.io/pipeline-xhs-harness-downloads/)
 
-1. 安装 [DeepSeek Harness for Mac](https://www.deepseek.com/harness/zh/)，放进「应用程序」。
-2. 解压下载的 ZIP，双击 **安装小红书插件.command**。如果 Harness 正在运行，保存工作并按 ⌘Q，安装窗口会自动继续。
-3. 安装完成后，在 Harness 左侧打开 **Pipeline｜小红书内容生成**，登录或注册自己的 Pipeline 账号。
+## 在 Harness 里安装
 
-生成内容会使用 Pipeline 积分。需要采集小红书原帖时，请在收藏库安装对应的浏览器扩展。
+- 已添加收录本插件的索引？打开「插件 → 发现」，选择该索引，搜索 **小红书内容生成** 或 **Pipeline**，点「安装」。
+- 初次使用？在「插件 → 添加插件」粘贴下方安装地址，确认安装。全程在 Harness 里完成。
 
-当前为 Mac 测试版，安装流程使用 Harness 0.2.2-rc.1 验证。升级时可从同一链接下载新版。
+```text
+https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/download/v0.5.4-beta.33/Pipeline-XHS-Harness.tgz
+```
+
+也可以开启「自定义插件索引」，在「发现 → 添加索引源」加入作者的[插件索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json)。
+
+## 做第一篇笔记
+
+打开侧栏的插件，登录或注册自己的 Pipeline 账号。在「原创创作」选主题或粘贴草稿，例如「周末野餐要带什么」，生成文案并检查，再选风格生成配图。完成后预览笔记、复制正文、下载图片，到小红书发布。生成使用 Pipeline 积分。收藏原帖另需浏览器收藏扩展。
+
+[Mac 双击安装包（备用）](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest/download/Pipeline-XHS-Mac.zip)
