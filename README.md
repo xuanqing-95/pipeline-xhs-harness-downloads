@@ -4,6 +4,16 @@
 
 [看产品示例与安装图文说明](https://xuanqing-95.github.io/pipeline-xhs-harness-downloads/)
 
+## 工作台长什么样？
+
+![原创创作工作台，左侧填写野餐清单草稿，右侧选择配图风格](docs/examples/workspace.png)
+
+上图是已发布插件的界面，使用演示数据。左边输入自己的选题或草稿，点击「生成文案」，再从右边选择一种画法，生成配图。下面是插件提供的三种风格样张。
+
+| 通用卡通配图 | 玄清知识图卡 | Social Comic 条漫 |
+| :---: | :---: | :---: |
+| ![卡通风格样张](docs/examples/cartoon.png) | ![知识图卡样张](docs/examples/knowledge.png) | ![条漫风格样张](docs/examples/comic.webp) |
+
 ## 在 Harness 里安装
 
 - 已添加收录本插件的索引？打开「插件 → 发现」，选择该索引，搜索 **小红书内容生成** 或 **Pipeline**，点「安装」。
