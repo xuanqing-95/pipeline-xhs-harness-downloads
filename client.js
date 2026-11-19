@@ -1,4 +1,4 @@
-/* redflow-ui-build: 30f3f6f1-5c41-43d6-9b25-ef7a5c5d2e5d */
+/* redflow-ui-build: 945165c5-d862-4b38-8b9a-c3d7fee11143 */
 window.__ModuleLoader__.load({id:"@local/redflow-workbench",factory(require){
 const module={exports:{}};const exports=module.exports;
 var __create = Object.create;
@@ -2424,7 +2424,7 @@ async function api(action, input = {}, method = "GET", signal) {
 }
 
 // native/ui-update.ts
-var uiBuild = "30f3f6f1-5c41-43d6-9b25-ef7a5c5d2e5d";
+var uiBuild = "945165c5-d862-4b38-8b9a-c3d7fee11143";
 var moduleId = "@local/redflow-workbench";
 var nextBillingBuild = /* @__PURE__ */ Symbol.for("@local/redflow-workbench:resume-billing");
 function initialPluginRoute() {
@@ -17994,9 +17994,6 @@ Checkbox3.displayName = Checkbox.displayName;
 async function fetchRecentImageAssets(limit = 36) {
   return api("native-image-assets", { limit: String(Math.min(limit, 100)) });
 }
-async function fetchImageAssetRetentions(source, id) {
-  return api("native-image-retentions", { source, id });
-}
 
 // ../redflow-production/apps/web/src/components/create-workbench/SocialComicSeriesAssetsPanel.tsx
 var import_jsx_runtime32 = require("react/jsx-runtime");
@@ -20234,16 +20231,11 @@ async function saveDownload(payload, fileName) {
   window.setTimeout(() => URL.revokeObjectURL(blobUrl), 1e3);
   return { method: "browser-download", variant: payload.variant, usedFallback: payload.usedFallback };
 }
-function getVariantMessage(variant) {
-  if (!variant) return "";
-  return variant.includes("preview") ? "\u90E8\u5206\u56FE\u7247\u5DF2\u8D85\u8FC7 24 \u5C0F\u65F6\u9AD8\u6E05\u4FDD\u7559\u671F\uFF0C\u5DF2\u4E0B\u8F7D WebP \u6E05\u6670\u7248\u3002" : "\u5DF2\u4E0B\u8F7D\u9AD8\u6E05\u539F\u56FE\u3002";
-}
 function showDownloadResult(toast2, result, fileName, setNotice) {
-  const variantMessage = getVariantMessage(result.variant);
   const routeMessage = result.usedFallback ? "\u5DF2\u81EA\u52A8\u5207\u6362\u5907\u7528\u7EBF\u8DEF\u5E76\u5B8C\u6210\u4E0B\u8F7D\u3002" : "";
-  const description = [routeMessage, variantMessage || fileName].filter(Boolean).join(" ");
+  const description = [routeMessage, fileName].filter(Boolean).join(" ");
   toast2({ title: result.method === "native-save" ? "\u5DF2\u4FDD\u5B58\u5230\u672C\u673A" : "\u5DF2\u4EA4\u7ED9\u6D4F\u89C8\u5668\u4E0B\u8F7D", description });
-  if (routeMessage || variantMessage) setNotice({ tone: variantMessage.includes("\u9884\u89C8") ? "info" : "success", message: description });
+  if (routeMessage) setNotice({ tone: "success", message: description });
 }
 function useImageDownloads(title, imageUrls, context) {
   const { toast: toast2 } = useToast();
@@ -20283,57 +20275,10 @@ function useImageDownloads(title, imageUrls, context) {
   return { downloading, downloadNotice, handleDownloadImage, handleDownloadAll };
 }
 
-// ../redflow-production/apps/web/src/components/task-pool/useImageRetentionNotice.ts
-var import_react15 = require("react");
-var DEFAULT_NOTICE = "\u9AD8\u6E05\u539F\u56FE\u4FDD\u7559 24 \u5C0F\u65F6\uFF0C\u8FC7\u671F\u540E\u4ECD\u53EF\u4E0B\u8F7D WebP \u6E05\u6670\u7248\u3002";
-function formatRetentionDate(value) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "";
-  return `${date.getFullYear()}\u5E74${date.getMonth() + 1}\u6708${date.getDate()}\u65E5`;
-}
-function buildImageRetentionNotice(assets, imageCount, nowMs = Date.now()) {
-  if (imageCount <= 0) return null;
-  if (assets.length === 0) return { tone: "info", message: DEFAULT_NOTICE };
-  const futureDates = assets.filter((asset) => asset.original_url && !asset.original_deleted_at && asset.original_expires_at).map((asset) => Date.parse(asset.original_expires_at || "")).filter((time) => Number.isFinite(time) && time > nowMs).sort((a, b) => a - b);
-  if (futureDates.length === 0) {
-    return { tone: "info", message: "\u9AD8\u6E05\u539F\u56FE\u5DF2\u8FC7\u671F\uFF0C\u73B0\u5728\u53EF\u4E0B\u8F7D WebP \u6E05\u6670\u7248\u3002" };
-  }
-  const dateText = formatRetentionDate(new Date(futureDates[0]).toISOString());
-  if (!dateText) return { tone: "info", message: DEFAULT_NOTICE };
-  const hasExpired = futureDates.length < assets.length;
-  return {
-    tone: hasExpired ? "info" : "success",
-    message: hasExpired ? `\u90E8\u5206\u9AD8\u6E05\u539F\u56FE\u4ECD\u53EF\u4E0B\u8F7D\uFF0C\u6700\u65E9\u4FDD\u7559\u81F3 ${dateText}\u3002` : `\u9AD8\u6E05\u539F\u56FE\u53EF\u4E0B\u8F7D\uFF0C\u4FDD\u7559\u81F3 ${dateText}\u3002`
-  };
-}
-function useImageRetentionNotice({
-  source,
-  id,
-  imageCount
-}) {
-  const [assets, setAssets] = (0, import_react15.useState)([]);
-  const [fallback, setFallback] = (0, import_react15.useState)(false);
-  (0, import_react15.useEffect)(() => {
-    let cancelled = false;
-    setFallback(false);
-    setAssets([]);
-    if (!source || !id || imageCount <= 0) return;
-    fetchImageAssetRetentions(source, id).then((rows) => {
-      if (!cancelled) setAssets(rows);
-    }).catch(() => {
-      if (!cancelled) setFallback(true);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [source, id, imageCount]);
-  return (0, import_react15.useMemo)(() => fallback ? { tone: "info", message: DEFAULT_NOTICE } : buildImageRetentionNotice(assets, imageCount), [assets, fallback, imageCount]);
-}
-
 // ../redflow-production/apps/web/src/components/create-workbench/ImageGalleryContent.tsx
 var import_jsx_runtime47 = require("react/jsx-runtime");
 function ImageGalleryContent(props) {
-  const { imageUrls, downloading, downloadNotice, retentionNotice, onDownloadAll, onDownloadImage, onPreviewImage } = props;
+  const { imageUrls, downloading, downloadNotice, onDownloadAll, onDownloadImage, onPreviewImage } = props;
   return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(import_jsx_runtime47.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { className: "flex items-center justify-between gap-3", children: [
       /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { className: "flex items-center gap-2 iwt-label text-iwt-slate-900", children: [
@@ -20357,7 +20302,6 @@ function ImageGalleryContent(props) {
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("button", { type: "button", onClick: () => onDownloadImage(url, index2), disabled: downloading !== null, className: "absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-pill bg-white/90 text-iwt-slate-900 opacity-0 shadow-[0_6px_18px_-14px_rgba(15,23,42,0.6)] transition-all hover:bg-white hover:text-iwt-slate-700 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-iwt-slate-500 group-hover:opacity-100 disabled:cursor-wait disabled:opacity-70", "aria-label": `\u4E0B\u8F7D\u7B2C ${index2 + 1} \u5F20\u914D\u56FE`, children: downloading === index2 ? /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(LoaderCircle, { className: "h-3.5 w-3.5 animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Download, { className: "h-3.5 w-3.5" }) })
     ] }, url)) }),
-    retentionNotice && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: cn("rounded-iwt-card px-3 py-2 text-xs leading-5", retentionNotice.tone === "success" ? "bg-iwt-slate-100 text-iwt-slate-900" : "bg-iwt-slate-100 text-iwt-slate-700"), children: retentionNotice.message }),
     downloadNotice && /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { className: cn("rounded-iwt-card px-3 py-2 text-xs leading-5", downloadNotice.tone === "success" && "bg-iwt-slate-100 text-iwt-slate-900", downloadNotice.tone === "info" && "bg-iwt-slate-100 text-iwt-slate-700", downloadNotice.tone === "error" && "bg-iwt-red-50 text-iwt-red-600"), children: [
       downloadNotice.title && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("p", { className: "font-semibold", children: downloadNotice.title }),
       /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("p", { className: downloadNotice.title ? "mt-0.5" : void 0, children: downloadNotice.message })
@@ -20379,7 +20323,6 @@ function ImageGalleryPanel({
   onSocialComicConfigChange,
   downloading,
   downloadNotice,
-  retentionNotice,
   onDownloadAll,
   onDownloadImage,
   onGenerateImage,
@@ -20393,7 +20336,6 @@ function ImageGalleryPanel({
         imageUrls,
         downloading,
         downloadNotice,
-        retentionNotice,
         onDownloadAll,
         onDownloadImage,
         onPreviewImage
@@ -20943,11 +20885,6 @@ function ImagePanel({
     source: "original",
     id: result.id
   });
-  const retentionNotice = useImageRetentionNotice({
-    source: "original",
-    id: result.id,
-    imageCount: imageUrls.length
-  });
   const [previewIndex, setPreviewIndex] = (0, import_react18.useState)(null);
   const {
     balance,
@@ -21000,7 +20937,6 @@ function ImagePanel({
         onSocialComicConfigChange,
         downloading,
         downloadNotice,
-        retentionNotice,
         onDownloadAll: handleDownloadAll,
         onDownloadImage: handleDownloadImage,
         onGenerateImage,
@@ -28419,7 +28355,7 @@ function NativeGuidePage() {
     /* @__PURE__ */ (0, import_jsx_runtime103.jsx)("h1", { className: "iwt-app-title", children: "\u4F7F\u7528\u6307\u5357" }),
     /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)("p", { className: "text-sm text-iwt-slate-500", children: [
       "\u63D2\u4EF6\u7248\u672C\uFF1A",
-      "0.5.4-beta.33",
+      "0.5.4-beta.33.1",
       "\u3002\u5B89\u88C5\u66F4\u65B0\u540E\uFF0C\u79BB\u5F00\u63D2\u4EF6\u9875\u9762\u4F1A\u68C0\u67E5\u65B0\u7248\uFF0C\u518D\u6253\u5F00\u5373\u53EF\u4F7F\u7528\u3002"
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime103.jsx)("p", { children: "\u8FD9\u91CC\u662F\u300CPipeline\uFF5C\u5C0F\u7EA2\u4E66\u5185\u5BB9\u751F\u6210\u300D\u7684 Harness \u8BD5\u7528\u7248\u3002\u4F7F\u7528\u4F60\u81EA\u5DF1\u7684 Pipeline \u8D26\u53F7\uFF0C\u7F51\u7AD9\u4E0E\u63D2\u4EF6\u5171\u4EAB\u54C1\u724C\u3001\u5185\u5BB9\u548C\u79EF\u5206\u3002" }),
