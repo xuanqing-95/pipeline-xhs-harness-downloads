@@ -1,6 +1,6 @@
 {
   "name": "@local/redflow-workbench",
-  "version": "0.5.4-beta.33.1",
+  "version": "0.5.4-beta.33.2",
   "type": "module",
   "description": "Pipeline｜小红书内容生成：把选题或草稿变成可编辑的笔记和配图，在 Harness 中预览、复制和下载。",
   "exports": {
