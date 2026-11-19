@@ -14,7 +14,7 @@
 
 ## 在 Harness 里安装
 
-打开 **插件 → 添加插件**，把下面的 GitHub 仓库地址粘贴到输入框，点击 **安装**。Windows 和 Mac 使用同一个地址。
+打开 **插件 → 添加插件**，把下面的 GitHub 仓库地址粘贴到输入框，点击 **安装**。看到「已安装」后点击 **立即启用**，再从左侧打开 **Pipeline｜小红书内容生成**。Windows 和 Mac 使用同一个地址。
 
 ```text
 https://github.com/xuanqing-95/pipeline-xhs-harness-downloads
