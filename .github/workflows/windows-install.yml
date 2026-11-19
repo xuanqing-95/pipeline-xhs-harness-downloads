@@ -1,0 +1,38 @@
+name: Verify Windows Harness install
+on:
+  push:
+    branches: [qa/windows-harness-install-20261119]
+permissions:
+  contents: read
+jobs:
+  desktop:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Download and install official Windows desktop
+        shell: pwsh
+        run: |
+          $installer = Join-Path $env:RUNNER_TEMP 'dsh.exe'
+          curl.exe --fail --location --retry 2 --max-time 210 --silent --show-error 'https://download.deepseek.com/desktop/dsh-latest-windows-x64.exe' -o $installer
+          if ($LASTEXITCODE) { throw 'Desktop installer download failed' }
+          $info = (Get-Item $installer).VersionInfo
+          Write-Host "Downloaded $($info.ProductName) $($info.ProductVersion)"
+          $installDir = Join-Path $env:RUNNER_TEMP 'harness-test'
+          $result = Start-Process $installer -ArgumentList @('/S',"/D=$installDir") -Wait -PassThru
+          $exe = Get-ChildItem $installDir -Recurse -Filter '*.exe' | Where-Object { $_.VersionInfo.ProductName -match 'DeepSeek Harness' -and $_.Name -notmatch 'Uninstall' } | Select-Object -First 1
+          if (-not $exe) { throw "No installed desktop found (exit $($result.ExitCode))" }
+          Write-Host "Desktop executable $($exe.Name) $($exe.VersionInfo.ProductVersion)"
+          "DSH_TEST_EXE=$($exe.FullName)" >> $env:GITHUB_ENV
+      - name: Install UI testing library
+        run: npm install --prefix qa --no-save --ignore-scripts playwright-core@1.56.1
+      - name: Paste GitHub URL into the Add plugin dialog
+        run: node qa/windows.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-install-evidence
+          path: qa/evidence/
+          if-no-files-found: ignore
