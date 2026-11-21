@@ -4,29 +4,29 @@
 
 ## 在 Harness 里安装
 
-打开 **插件 → 添加插件**，粘贴以下地址，点 **安装**。安装完成后点 **立即启用**，再从左侧打开 **Pipeline｜小红书内容生成**。Mac 和 Windows 用同一个地址，无需登录 GitHub。
+1. 打开 **插件 → 添加插件**。
+2. 输入这个名字，点 **安装**。
 
-```text
-https://github.com/xuanqing-95/pipeline-xhs-harness-downloads
-```
+   ```text
+   dsh-pipeline-xhs
+   ```
 
-当前版本 **0.5.4-beta.54**，适用于 DeepSeek Harness **0.2.2 系列**（从 0.2.2-rc.1 起）。
+3. 安装完成后点 **立即启用**，从左侧打开 **Pipeline｜小红书内容生成**。
 
-### 按中文名称搜索或开启自动更新
+Mac 和 Windows 使用同一个名字。适用于 DeepSeek Harness 0.2.2 系列（从 0.2.2-rc.1 起）。[在 npm 查看版本](https://www.npmjs.com/package/dsh-pipeline-xhs)
 
-如果已有「发现」入口，打开收录本插件的索引源，搜索 **小红书内容生成**，点 **安装**。第一次使用「发现」时，先在「插件 → 实验性插件」开启「自定义插件索引」，再到「发现」添加下面这个索引源。
+### 收到新版时
 
-```text
-https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json
-```
+用上面的名字安装并启用后，插件会通过 Harness 的 npm 安装源检查更新。出现提醒时点 **立即更新**。想让插件在空闲时自行更新，可以在 **使用指南 → 插件更新** 勾选 **空闲时自动更新**。这里也可以手动检查版本。
 
-也可以在「添加插件」直接粘贴下面的版本地址。这个地址和「发现」都固定到同一个经过校验的版本。之后在 Pipeline「使用指南」里可以检查更新、点「立即更新」，或开启「空闲时自动更新」。普通仓库地址和备用安装包也会提示新版，如需一键更新，请先切换到上述固定版本来源。
+<details>
+<summary>已通过 GitHub 安装，或需要 Mac 安装包</summary>
 
-```text
-git+https://github.com/xuanqing-95/pipeline-xhs-harness-downloads.git#ae042b4ee5152a8e316eecff35f62b1645649010
-```
+已经通过作者索引或固定 Git 提交安装的用户，可在原插件中继续接收更新。普通 GitHub 地址和 Mac 安装包也会提示新版本。首次安装推荐使用上方的 npm 短包名。
 
-[查看发行说明和备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/tag/v0.5.4-beta.54)
+[作者索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json) · [GitHub 版本与备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/tag/v0.5.4-beta.55)
+
+</details>
 
 ## 原创创作工作台
 
