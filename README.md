@@ -13,7 +13,7 @@
 
 3. 安装完成后点 **立即启用**，从左侧打开 **Pipeline｜小红书内容生成**。
 
-Mac 和 Windows 使用同一个名字。适用于 DeepSeek Harness 0.2.2 系列（从 0.2.2-rc.1 起）。[在 npm 查看版本](https://www.npmjs.com/package/dsh-pipeline-xhs)
+Mac 和 Windows 使用同一个名字。适用于 DeepSeek Harness 0.2.2 系列（从 0.2.2-rc.1 起）。[在 npm 查看版本](https://www.npmjs.com/package/dsh-pipeline-xhs) · [查看 Harness 安装回执](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/download/v0.5.4-beta.56/Harness-Install-Verified.png)
 
 ### 收到新版时
 
@@ -24,7 +24,7 @@ Mac 和 Windows 使用同一个名字。适用于 DeepSeek Harness 0.2.2 系列�
 <details>
 <summary>已通过 GitHub 安装，或需要 Mac 安装包</summary>
 
-已经通过作者索引或固定 Git 提交安装的用户，可在原插件中继续接收更新。普通 GitHub 地址和 Mac 安装包也会提示新版本。首次安装推荐使用上方的 npm 短包名。
+通过作者索引或固定 Git 提交安装的 beta.56，可以在插件内更新。通过普通 GitHub 地址或 Mac 安装包安装的 beta.56，可以从新版提醒打开安装说明。
 
 [作者索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json) · [GitHub 版本与备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/tag/v0.5.4-beta.56)
 
