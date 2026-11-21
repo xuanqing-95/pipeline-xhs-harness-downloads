@@ -1,6 +1,6 @@
 {
   "name": "@local/redflow-workbench",
-  "version": "0.5.4-beta.54",
+  "version": "0.5.4-beta.55",
   "type": "module",
   "description": "Pipeline｜小红书内容生成：在 DeepSeek Harness 里编辑文案、生成配图并下载成品。",
   "exports": {

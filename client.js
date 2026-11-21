@@ -1,4 +1,4 @@
-/* redflow-ui-build: 86260bcf-f546-4241-92ce-014cf7d7d7d9 */
+/* redflow-ui-build: ac5908bc-3774-4ee1-a616-4fd3f10dd316 */
 window.__ModuleLoader__.load({id:"@local/redflow-workbench",factory(require){
 const module={exports:{}};const exports=module.exports;
 var __create = Object.create;
@@ -2427,8 +2427,8 @@ async function api(action, input = {}, method = "GET", signal) {
 }
 
 // native/ui-update.ts
-var uiBuild = "86260bcf-f546-4241-92ce-014cf7d7d7d9";
-var moduleId = "@local/redflow-workbench";
+var uiBuild = "ac5908bc-3774-4ee1-a616-4fd3f10dd316";
+var moduleId = true ? "@local/redflow-workbench" : "@local/redflow-workbench";
 var nextBillingBuild = /* @__PURE__ */ Symbol.for("@local/redflow-workbench:resume-billing");
 var resumeKey = /* @__PURE__ */ Symbol.for("@local/redflow-workbench:resume-reading");
 function initialPluginRoute() {
@@ -2485,7 +2485,7 @@ function installPluginUpdates(ctx) {
 
 // public-update.js
 var publicRepository = "https://github.com/xuanqing-95/pipeline-xhs-harness-downloads";
-var publicModuleId = "@local/redflow-workbench";
+var npmPackageName = "dsh-pipeline-xhs";
 var versionPattern = /^0\.5\.4-beta\.(0|[1-9]\d{0,4})(?:\.(0|[1-9]\d{0,4}))?$/;
 function isPublicGitSource(source) {
   return /^(?:github:|(?:git\+)?https:\/\/github\.com\/)xuanqing-95\/pipeline-xhs-harness-downloads(?:\.git)?#[a-f0-9]{40}$/i.test(source);
@@ -2503,7 +2503,8 @@ function comparePublicVersions(left, right) {
 
 // native/public-plugin-update.ts
 var preference = "pipeline.harness.idle-update";
-var attempted = "pipeline.harness.last-auto-update";
+var bundleName = true ? "@local/redflow-workbench" : publicModuleId;
+var attempted = "pipeline.harness.last-auto-update" + (bundleName === npmPackageName ? ".npm" : "");
 function readSetting(key) {
   try {
     return localStorage.getItem(key);
@@ -2517,7 +2518,7 @@ function writeSetting(key, value) {
   } catch {
   }
 }
-var installedVersion = "0.5.4-beta.54";
+var installedVersion = "0.5.4-beta.55";
 var installGuide = publicRepository + "#\u5728-harness-\u91CC\u5B89\u88C5";
 var snapshot = {
   release: null,
@@ -2550,18 +2551,33 @@ function setAutomaticUpdate(enabled) {
   setState({ automatic: enabled, message: "" });
 }
 function compatibleInstall(bundle) {
+  if (bundleName === npmPackageName) return bundle?.installed === true && bundle.update === "registry";
   return bundle?.installed === true && bundle.update === "git" && isPublicGitSource(bundle.source);
+}
+async function registryUpdate(target) {
+  const listing = await target.listVersions(npmPackageName);
+  if (listing.status !== "listed") throw new Error("\u6682\u65F6\u65E0\u6CD5\u8BFB\u53D6 npm \u7248\u672C");
+  const next = listing.versions.find((item) => item.bundle && !item.deprecated && !item.incompatible && item.tags.includes("latest"));
+  return next ? { version: next.version, registry: listing.registry } : null;
 }
 async function checkPublicUpdate(manual = false) {
   if (snapshot.checking || snapshot.installing) return;
   const active = generation;
   setState({ checking: true, ...manual ? { message: "" } : {} });
   try {
-    const next = await api("public-update");
-    const bundle = (await manager?.listBundles())?.find((item) => item.name === publicModuleId);
+    const target = manager;
+    const bundle = (await target?.listBundles())?.find((item) => item.name === bundleName);
     if (active !== generation) return;
     const installed = bundle?.version || installedVersion;
-    const release = /^[a-f0-9]{40}$/.test(next?.commit) && comparePublicVersions(next?.version, installed) > 0 ? next : null;
+    let release;
+    if (bundleName === npmPackageName) {
+      if (!target || !compatibleInstall(bundle)) throw new Error("\u6CA1\u6709\u53EF\u66F4\u65B0\u7684 npm \u5B89\u88C5");
+      release = await registryUpdate(target);
+    } else {
+      const next = await api("public-update");
+      release = /^[a-f0-9]{40}$/.test(next?.commit) && comparePublicVersions(next?.version, installed) > 0 ? next : null;
+    }
+    if (active !== generation) return;
     setState({
       release,
       installed,
@@ -2589,9 +2605,9 @@ async function installPublicUpdate(automatic = false) {
   setState({ installing: true, message: "\u6B63\u5728\u5B89\u88C5\u65B0\u7248\u2026" });
   const active = generation;
   try {
-    const bundle = (await target.listBundles()).find((item) => item.name === publicModuleId);
+    const bundle = (await target.listBundles()).find((item) => item.name === bundleName);
     if (active !== generation) return;
-    if (!compatibleInstall(bundle) || !(comparePublicVersions(release.version, bundle?.version) > 0)) {
+    if (!compatibleInstall(bundle) || bundle?.version !== snapshot.installed) {
       setState({ message: "\u63D2\u4EF6\u5B89\u88C5\u6765\u6E90\u6216\u7248\u672C\u5DF2\u53D8\u5316\uFF0C\u8BF7\u91CD\u65B0\u68C0\u67E5\u66F4\u65B0\u3002" });
       return;
     }
@@ -2601,7 +2617,8 @@ async function installPublicUpdate(automatic = false) {
     }
     attemptedVersion = release.version;
     writeSetting(attempted, attemptedVersion);
-    const update3 = await target.updateBundle(publicModuleId, release.version, { spec: publicGitSpec(release.commit) });
+    const options2 = "registry" in release ? { registry: release.registry } : { spec: publicGitSpec(release.commit) };
+    const update3 = await target.updateBundle(bundleName, release.version, options2);
     if (active !== generation) return;
     if (update3.result.application === "failed" || update3.result.application === "cancelled") {
       setState({ message: update3.restore?.application === "failed" ? "\u66F4\u65B0\u5931\u8D25\uFF0C\u65E7\u7248\u672A\u80FD\u6062\u590D\u3002\u8BF7\u6253\u5F00\u5B89\u88C5\u8BF4\u660E\u3002" : "\u66F4\u65B0\u6CA1\u6709\u5B8C\u6210\uFF0C\u8BF7\u7A0D\u540E\u91CD\u8BD5\u3002" });
@@ -2635,6 +2652,7 @@ function startPublicPluginUpdates(ctx) {
       return () => {
         generation++;
         manager = void 0;
+        setState({ checking: false, installing: false, eligible: false, release: null });
         clearInterval(retry);
         clearInterval(poll);
         document.removeEventListener("visibilitychange", onVisible);
