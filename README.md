@@ -1,36 +1,42 @@
 # Pipeline｜小红书内容生成
 
-把一个主题、几行草稿或收藏的参考笔记，做成可编辑的小红书笔记。插件在 DeepSeek Harness 里生成标题、正文和配图，支持预览、复制和下载，最后由你检查并发布。
-
-## 工作台长什么样？
-
-![原创创作工作台，左侧填写野餐清单草稿，右侧选择配图风格](docs/examples/workspace.png)
-
-上图是已发布插件的界面，使用演示数据。左边输入自己的选题或草稿，点击「生成文案」，再从右边选择一种画法，生成配图。下面是插件提供的三种风格样张。
-
-| 通用卡通配图 | 玄清知识图卡 | Social Comic 条漫 |
-| :---: | :---: | :---: |
-| ![卡通风格样张](docs/examples/cartoon.png) | ![知识图卡样张](docs/examples/knowledge.png) | ![条漫风格样张](docs/examples/comic.webp) |
+在 DeepSeek Harness 里把主题或草稿写成小红书笔记，接着配图、预览和批量下载。也可以从收藏库选一篇参考笔记开始仿写。正式创作使用你的 Pipeline 账号和积分，体验模式消耗 0 积分。
 
 ## 在 Harness 里安装
 
-打开 **插件 → 添加插件**，把下面的 GitHub 仓库地址粘贴到输入框，点击 **安装**。看到「已安装」后点击 **立即启用**，再从左侧打开 **Pipeline｜小红书内容生成**。Windows 和 Mac 使用同一个地址。
+打开 **插件 → 添加插件**，粘贴以下地址，点 **安装**。安装完成后点 **立即启用**，再从左侧打开 **Pipeline｜小红书内容生成**。Mac 和 Windows 用同一个地址，无需登录 GitHub。
 
 ```text
 https://github.com/xuanqing-95/pipeline-xhs-harness-downloads
 ```
 
-<details>
-<summary>其他安装方式</summary>
+当前版本 **0.5.4-beta.54**，适用于 DeepSeek Harness **0.2.2 系列**（从 0.2.2-rc.1 起）。
 
-已添加收录本插件的索引时，可在「插件 → 发现」搜索「小红书内容生成」。也可添加[作者索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json)。Mac 用户另有[备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest/download/Pipeline-XHS-Mac.zip)。
+### 按中文名称搜索或开启自动更新
 
-</details>
+如果已有「发现」入口，打开收录本插件的索引源，搜索 **小红书内容生成**，点 **安装**。第一次使用「发现」时，先在「插件 → 实验性插件」开启「自定义插件索引」，再到「发现」添加下面这个索引源。
 
-## 做第一篇笔记
+```text
+https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json
+```
 
-1. 从 Harness 侧栏打开插件，登录或注册自己的 Pipeline 账号。生成文案和配图会使用 Pipeline 积分，可以先在「账户积分」查看余额。
-2. 打开「原创创作」，选「主题」，输入一个选题，例如「两个人周末野餐要带什么？」，点击「生成文案」。
-3. 检查标题和正文，选择配图风格并生成。在「任务池」打开成品预览，复制正文、下载图片，到小红书确认发布。
+也可以在「添加插件」直接粘贴下面的版本地址。这个地址和「发现」都固定到同一个经过校验的版本。之后在 Pipeline「使用指南」里可以检查更新、点「立即更新」，或开启「空闲时自动更新」。普通仓库地址和备用安装包也会提示新版，如需一键更新，请先切换到上述固定版本来源。
 
-想从参考笔记开始写？在「收藏库」按提示安装配套的浏览器收藏扩展，收藏原帖后，回到插件点击「开始仿写」。
+```text
+git+https://github.com/xuanqing-95/pipeline-xhs-harness-downloads.git#ae042b4ee5152a8e316eecff35f62b1645649010
+```
+
+[查看发行说明和备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/tag/v0.5.4-beta.54)
+
+## 原创创作工作台
+
+![当前工作台的体验模式，左侧是创作专家，生成的原图在下方每行显示四张](docs/examples/workbench-current.png)
+
+上图使用 **beta.54** 工作台组件与内置体验数据。左侧可选择文案和配图专家，例如通用卡通配图、知识图卡和 Social Comic 条漫。
+
+1. 从 Harness 侧栏打开插件，登录自己的 Pipeline 账号。
+2. 打开「原创创作」。想先试用时，从标题旁切换到「体验模式」，点击「填入示例数据」。正式创作可直接输入自己的主题、草稿或完整文案。
+3. 选择文案专家后，先生成文案供你核对和修改。已有文案时可只选配图专家。配图完成后，工作台会滚到结果，可逐张预览或批量下载。
+4. 从「任务池」找回正式创作任务，从「账户积分」核对消耗。想仿写时，可从「收藏库」选择已收藏的笔记。
+
+本插件由玄清维护。

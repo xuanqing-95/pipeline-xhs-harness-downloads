@@ -1,8 +1,8 @@
 {
   "format": 1,
   "title": {
-    "en": "Xuanqing · Pipeline",
-    "zh": "玄清 · Pipeline 创作插件"
+    "en": "Pipeline · Xiaohongshu Content Studio",
+    "zh": "Pipeline｜小红书内容生成"
   },
   "plugins": [
     {
@@ -13,7 +13,7 @@
       },
       "description": {
         "en": "Turn a topic or draft into a Xiaohongshu post with illustrations, preview and download.",
-        "zh": "输入一个主题或草稿，生成小红书标题、正文和配图。支持原创、参考收藏仿写、预览与下载。使用自己的 Pipeline 账号及积分。"
+        "zh": "在 DeepSeek Harness 里把主题或草稿写成小红书笔记，编辑文案、生成配图、预览及批量下载。也支持收藏仿写。体验模式消耗 0 积分。"
       },
       "author": "玄清",
       "keywords": [
@@ -37,6 +37,30 @@
         "url": "https://github.com/xuanqing-95/pipeline-xhs-harness-downloads"
       },
       "versions": [
+        {
+          "version": "0.5.4-beta.54",
+          "publishTimestamp": 1795224138,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/xuanqing-95/pipeline-xhs-harness-downloads",
+            "commit": "ae042b4ee5152a8e316eecff35f62b1645649010"
+          },
+          "engines": {
+            "dsh": ">=0.2.2-rc.1 <0.2.3-0"
+          }
+        },
+        {
+          "version": "0.5.4-beta.53",
+          "publishTimestamp": 1795224138,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/xuanqing-95/pipeline-xhs-harness-downloads",
+            "commit": "c831713ece7ef777b2f7eb80942da102c1881c0c"
+          },
+          "engines": {
+            "dsh": ">=0.2.2-rc.1 <0.2.3-0"
+          }
+        },
         {
           "version": "0.5.4-beta.33.2",
           "publishTimestamp": 1795081242,
