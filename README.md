@@ -19,12 +19,14 @@ Mac 和 Windows 使用同一个名字。适用于 DeepSeek Harness 0.2.2 系列�
 
 用上面的名字安装并启用后，插件会通过 Harness 的 npm 安装源检查更新。出现提醒时点 **立即更新**。想让插件在空闲时自行更新，可以在 **使用指南 → 插件更新** 勾选 **空闲时自动更新**。这里也可以手动检查版本。
 
+已经安装 npm 首版 0.5.4-beta.55 的用户，请在 Harness 的「插件」页面打开 Pipeline 详情，展开「版本」中的新版本，勾选「显示预发布版本」，更新到 0.5.4-beta.56。之后可以在 Pipeline 里接收提醒。
+
 <details>
 <summary>已通过 GitHub 安装，或需要 Mac 安装包</summary>
 
 已经通过作者索引或固定 Git 提交安装的用户，可在原插件中继续接收更新。普通 GitHub 地址和 Mac 安装包也会提示新版本。首次安装推荐使用上方的 npm 短包名。
 
-[作者索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json) · [GitHub 版本与备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/tag/v0.5.4-beta.55)
+[作者索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json) · [GitHub 版本与备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/tag/v0.5.4-beta.56)
 
 </details>
 
