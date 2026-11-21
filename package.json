@@ -1,8 +1,9 @@
 {
   "name": "@local/redflow-workbench",
-  "version": "0.5.4-beta.33.2",
+  "version": "0.5.4-beta.53",
+  "private": true,
   "type": "module",
-  "description": "Pipeline｜小红书内容生成：把选题或草稿变成可编辑的笔记和配图，在 Harness 中预览、复制和下载。",
+  "description": "玄清的小红书内容生成工作台 · DeepSeek Harness 插件版",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
@@ -31,7 +32,7 @@
     "url": "https://github.com/xuanqing-95"
   },
   "license": "UNLICENSED",
-  "homepage": "https://github.com/xuanqing-95/pipeline-xhs-harness-downloads#readme",
+  "homepage": "https://github.com/xuanqing-95/pipeline-xhs-harness-downloads",
   "keywords": [
     "deepseek-harness",
     "xiaohongshu",
@@ -39,16 +40,6 @@
     "rednote",
     "content-generation",
     "玄清",
-    "小红书内容生成",
-    "dsh-plugin",
-    "小红书",
-    "Pipeline",
-    "原创",
-    "仿写",
-    "配图"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/xuanqing-95/pipeline-xhs-harness-downloads.git"
-  }
+    "小红书内容生成"
+  ]
 }
