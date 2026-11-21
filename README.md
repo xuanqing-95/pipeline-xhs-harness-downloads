@@ -15,6 +15,13 @@
 
 Mac 和 Windows 使用同一个名字。适用于 DeepSeek Harness 0.2.2 系列（从 0.2.2-rc.1 起）。[在 npm 查看版本](https://www.npmjs.com/package/dsh-pipeline-xhs) · [查看 Harness 安装回执](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/download/v0.5.4-beta.56/Harness-Install-Verified.png)
 
+<details>
+<summary>安装失败，详情里出现了 0.0.0-stage</summary>
+
+回到「添加插件」，输入 `dsh-pipeline-xhs@0.5.4-beta.56`，再点「安装」。这样会下载指定版本，跳过安装器记住的旧包。以后有新版本，插件仍会提示更新。
+
+</details>
+
 ### 收到新版时
 
 用上面的名字安装并启用后，插件会通过 Harness 的 npm 安装源检查更新。出现提醒时点 **立即更新**。想让插件在空闲时自行更新，可以在 **使用指南 → 插件更新** 勾选 **空闲时自动更新**。这里也可以手动检查版本。
