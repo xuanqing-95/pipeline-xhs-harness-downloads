@@ -51,7 +51,9 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
    if(stage==='installing'){
     const enable=pg.getByRole('button',{name:/^(Enable now|立即启用|现在启用)$/i});
     if(await visible(enable)){
-      if(!body.includes(version))throw Error('Installation receipt did not show ' + version);
+      // The completed receipt and its version can render just after the progress view.
+      const versionLabel = new RegExp('^(?:Version|版本)\\s*' + version.replaceAll('.', '\\.') + '$', 'i');
+      await pg.getByText(versionLabel).first().waitFor({state:'visible',timeout:10000});
       await shot('02-installed');await enable.first().click();stage='enabled';continue;
     }
    }
