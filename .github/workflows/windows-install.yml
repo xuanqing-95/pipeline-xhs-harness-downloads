@@ -6,6 +6,10 @@ permissions:
   contents: read
 jobs:
   desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: [npm, git-candidate]
     runs-on: windows-2022
     timeout-minutes: 15
     steps:
@@ -28,11 +32,14 @@ jobs:
           "DSH_TEST_EXE=$($exe.FullName)" >> $env:GITHUB_ENV
       - name: Install UI testing library
         run: npm install --prefix qa --no-save --ignore-scripts playwright-core@1.56.1
-      - name: Install the public npm name in the Add plugin dialog
+      - name: Install and open Pipeline in the Add plugin dialog
+        env:
+          QA_CHANNEL: ${{ matrix.channel }}
+          QA_CANDIDATE: d49b87c452946976f7c943189018d05d03ab22c9
         run: node qa/windows.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: windows-install-evidence
+          name: windows-install-${{ matrix.channel }}
           path: qa/evidence/
           if-no-files-found: ignore

@@ -3,6 +3,10 @@ const { spawn, execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const delay = ms => new Promise(r => setTimeout(r, ms));
 const packageName = 'dsh-pipeline-xhs';
+const gitCandidate = process.env.QA_CHANNEL === 'git-candidate';
+const candidate = process.env.QA_CANDIDATE;
+if (gitCandidate && !/^[a-f0-9]{40}$/.test(candidate)) throw Error('Invalid release candidate commit');
+const source = gitCandidate ? 'https://github.com/xuanqing-95/pipeline-xhs-harness-downloads#' + candidate : packageName;
 const out = 'qa/evidence';
 fs.mkdirSync(out,{recursive:true});
 const child = spawn(process.env.DSH_TEST_EXE,['--remote-debugging-port=9333','--lang=en-US'],{stdio:'ignore'});
@@ -11,10 +15,12 @@ const report = msg => console.log(msg);
 async function shot(name){ await current.screenshot({path:out+'/'+name+'.png',timeout:5000}); }
 async function visible(loc){return await loc.first().isVisible().catch(()=>false);}
 (async()=>{
- const metadata = await fetch('https://registry.npmjs.org/' + packageName + '/latest');
- if (!metadata.ok) throw Error('Cannot resolve the public npm version');
+ const metadata = await fetch(gitCandidate
+   ? 'https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/' + candidate + '/package.json'
+   : 'https://registry.npmjs.org/' + packageName + '/latest');
+ if (!metadata.ok) throw Error('Cannot resolve the expected plugin version');
  const {version} = await metadata.json();
- report('Testing npm install of ' + packageName + ' ' + version);
+ report('Testing install of ' + source + ' ' + version);
  for(let i=0;i<100&&!browser;i++){
    try{browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:1500});}catch{await delay(1200);}
  }
@@ -36,9 +42,9 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
    if(stage==='dialog'){
     const input=pg.getByPlaceholder(/whale-pet/i);
     if(!await visible(input))continue;
-    execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command', "Set-Clipboard -Value '"+packageName+"'"]);
+    execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command','Set-Clipboard -Value $env:QA_INSTALL_SPEC'],{env:{...process.env,QA_INSTALL_SPEC:source}});
     await input.first().focus();await input.first().press('Control+v');
-    if(await input.first().inputValue()!==packageName)throw Error('Clipboard paste mismatch');await shot('01-add-plugin');
+    if(await input.first().inputValue()!==source)throw Error('Clipboard paste mismatch');await shot('01-add-plugin');
     const install=pg.getByRole('button',{name:/^(Install|安装)$/i});
     await install.last().click();stage='installing';continue;
    }
@@ -57,7 +63,7 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
     if(await visible(confirm))await confirm.last().click();
    }
    if(stage==='open' && await visible(pg.locator('input[type=password]')) && /Pipeline/.test(body)){
-    await shot('04-plugin-open');fs.writeFileSync(out+'/result.json',JSON.stringify({platform:process.platform,packageName,version,result:'installed by npm name and opened via Windows desktop UI'}));report('PASS: Installed ' + packageName + ' ' + version + ' and opened plugin login');return;
+    await shot('04-plugin-open');fs.writeFileSync(out+'/result.json',JSON.stringify({platform:process.platform,source,version,result:'installed, enabled and opened via Windows desktop UI'}));report('PASS: Installed ' + source + ' ' + version + ' and opened plugin login');return;
    }
   }
   await delay(1300);
