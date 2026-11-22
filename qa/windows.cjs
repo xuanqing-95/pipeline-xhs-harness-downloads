@@ -2,7 +2,7 @@ const { chromium } = require('playwright-core');
 const { spawn, execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const delay = ms => new Promise(r => setTimeout(r, ms));
-const repo = 'https://github.com/xuanqing-95/pipeline-xhs-harness-downloads';
+const packageName = 'dsh-pipeline-xhs';
 const out = 'qa/evidence';
 fs.mkdirSync(out,{recursive:true});
 const child = spawn(process.env.DSH_TEST_EXE,['--remote-debugging-port=9333','--lang=en-US'],{stdio:'ignore'});
@@ -11,6 +11,10 @@ const report = msg => console.log(msg);
 async function shot(name){ await current.screenshot({path:out+'/'+name+'.png',timeout:5000}); }
 async function visible(loc){return await loc.first().isVisible().catch(()=>false);}
 (async()=>{
+ const metadata = await fetch('https://registry.npmjs.org/' + packageName + '/latest');
+ if (!metadata.ok) throw Error('Cannot resolve the public npm version');
+ const {version} = await metadata.json();
+ report('Testing npm install of ' + packageName + ' ' + version);
  for(let i=0;i<100&&!browser;i++){
    try{browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:1500});}catch{await delay(1200);}
  }
@@ -32,15 +36,18 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
    if(stage==='dialog'){
     const input=pg.getByPlaceholder(/whale-pet/i);
     if(!await visible(input))continue;
-    execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command', "Set-Clipboard -Value '"+repo+"'"]);
+    execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command', "Set-Clipboard -Value '"+packageName+"'"]);
     await input.first().focus();await input.first().press('Control+v');
-    if(await input.first().inputValue()!==repo)throw Error('Clipboard paste mismatch');await shot('01-add-plugin');
+    if(await input.first().inputValue()!==packageName)throw Error('Clipboard paste mismatch');await shot('01-add-plugin');
     const install=pg.getByRole('button',{name:/^(Install|安装)$/i});
     await install.last().click();stage='installing';continue;
    }
    if(stage==='installing'){
     const enable=pg.getByRole('button',{name:/^(Enable now|立即启用|现在启用)$/i});
-    if(await visible(enable)){await shot('02-installed');await enable.first().click();stage='enabled';continue;}
+    if(await visible(enable)){
+      if(!body.includes(version))throw Error('Installation receipt did not show ' + version);
+      await shot('02-installed');await enable.first().click();stage='enabled';continue;
+    }
    }
    if(stage==='enabled'){
     const panel=pg.getByText(/Pipeline\s*[|｜]\s*小红书内容生成/);
@@ -50,7 +57,7 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
     if(await visible(confirm))await confirm.last().click();
    }
    if(stage==='open' && await visible(pg.locator('input[type=password]')) && /Pipeline/.test(body)){
-    await shot('04-plugin-open');fs.writeFileSync(out+'/result.json',JSON.stringify({platform:process.platform,repository:repo,result:'installed and opened via Windows desktop UI'}));report('PASS: Installed from GitHub and opened plugin login');return;
+    await shot('04-plugin-open');fs.writeFileSync(out+'/result.json',JSON.stringify({platform:process.platform,packageName,version,result:'installed by npm name and opened via Windows desktop UI'}));report('PASS: Installed ' + packageName + ' ' + version + ' and opened plugin login');return;
    }
   }
   await delay(1300);

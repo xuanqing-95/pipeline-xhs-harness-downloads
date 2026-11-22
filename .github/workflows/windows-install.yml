@@ -28,7 +28,7 @@ jobs:
           "DSH_TEST_EXE=$($exe.FullName)" >> $env:GITHUB_ENV
       - name: Install UI testing library
         run: npm install --prefix qa --no-save --ignore-scripts playwright-core@1.56.1
-      - name: Paste GitHub URL into the Add plugin dialog
+      - name: Install the public npm name in the Add plugin dialog
         run: node qa/windows.cjs
       - uses: actions/upload-artifact@v4
         if: always()
