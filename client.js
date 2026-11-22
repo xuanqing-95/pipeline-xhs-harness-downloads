@@ -1,4 +1,4 @@
-/* redflow-ui-build: a046bd2e-d9e2-4d40-8285-555d730e5fbc */
+/* redflow-ui-build: ff2b254a-bdc6-479e-ab22-92054631f59a */
 window.__ModuleLoader__.load({id:"@local/redflow-workbench",factory(require){
 const module={exports:{}};const exports=module.exports;
 var __create = Object.create;
@@ -36,6 +36,558 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/debug.js
+var require_debug = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/debug.js"(exports, module2) {
+    "use strict";
+    var debug = typeof process === "object" && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? (...args) => console.error("SEMVER", ...args) : () => {
+    };
+    module2.exports = debug;
+  }
+});
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/constants.js
+var require_constants = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/constants.js"(exports, module2) {
+    "use strict";
+    var SEMVER_SPEC_VERSION = "2.0.0";
+    var MAX_LENGTH = 256;
+    var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || /* istanbul ignore next */
+    9007199254740991;
+    var MAX_SAFE_COMPONENT_LENGTH = 16;
+    var MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6;
+    var WHITESPACE_CHARACTERS = [
+      "	",
+      "\n",
+      "\v",
+      "\f",
+      "\r",
+      " ",
+      "\xA0",
+      "\u1680",
+      "\u2000",
+      "\u2001",
+      "\u2002",
+      "\u2003",
+      "\u2004",
+      "\u2005",
+      "\u2006",
+      "\u2007",
+      "\u2008",
+      "\u2009",
+      "\u200A",
+      "\u2028",
+      "\u2029",
+      "\u202F",
+      "\u205F",
+      "\u3000",
+      "\uFEFF"
+    ];
+    var RELEASE_TYPES = [
+      "major",
+      "premajor",
+      "minor",
+      "preminor",
+      "patch",
+      "prepatch",
+      "prerelease"
+    ];
+    module2.exports = {
+      MAX_LENGTH,
+      MAX_SAFE_COMPONENT_LENGTH,
+      MAX_SAFE_BUILD_LENGTH,
+      MAX_SAFE_INTEGER,
+      WHITESPACE_CHARACTERS,
+      RELEASE_TYPES,
+      SEMVER_SPEC_VERSION,
+      FLAG_INCLUDE_PRERELEASE: 1,
+      FLAG_LOOSE: 2
+    };
+  }
+});
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/re.js
+var require_re = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/re.js"(exports, module2) {
+    "use strict";
+    var {
+      MAX_SAFE_COMPONENT_LENGTH,
+      MAX_SAFE_BUILD_LENGTH,
+      MAX_LENGTH
+    } = require_constants();
+    var debug = require_debug();
+    exports = module2.exports = {};
+    var re = exports.re = [];
+    var safeRe = exports.safeRe = [];
+    var src = exports.src = [];
+    var safeSrc = exports.safeSrc = [];
+    var t = exports.t = {};
+    var R = 0;
+    var LETTERDASHNUMBER = "[a-zA-Z0-9-]";
+    var safeRegexReplacements = [
+      ["\\s", 1],
+      ["\\d", MAX_LENGTH],
+      [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH]
+    ];
+    var makeSafeRegex = (value) => {
+      for (const [token, max2] of safeRegexReplacements) {
+        value = value.split(`${token}*`).join(`${token}{0,${max2}}`).split(`${token}+`).join(`${token}{1,${max2}}`);
+      }
+      return value;
+    };
+    var createToken = (name, value, isGlobal) => {
+      const safe = makeSafeRegex(value);
+      const index2 = R++;
+      debug(name, index2, value);
+      t[name] = index2;
+      src[index2] = value;
+      safeSrc[index2] = safe;
+      re[index2] = new RegExp(value, isGlobal ? "g" : void 0);
+      safeRe[index2] = new RegExp(safe, isGlobal ? "g" : void 0);
+    };
+    createToken("NUMERICIDENTIFIER", "0|[1-9]\\d*");
+    createToken("NUMERICIDENTIFIERLOOSE", "\\d+");
+    createToken("NONNUMERICIDENTIFIER", `\\d*[a-zA-Z-]${LETTERDASHNUMBER}*`);
+    createToken("MAINVERSION", `(${src[t.NUMERICIDENTIFIER]})\\.(${src[t.NUMERICIDENTIFIER]})\\.(${src[t.NUMERICIDENTIFIER]})`);
+    createToken("MAINVERSIONLOOSE", `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.(${src[t.NUMERICIDENTIFIERLOOSE]})\\.(${src[t.NUMERICIDENTIFIERLOOSE]})`);
+    createToken("PRERELEASEIDENTIFIER", `(?:${src[t.NONNUMERICIDENTIFIER]}|${src[t.NUMERICIDENTIFIER]})`);
+    createToken("PRERELEASEIDENTIFIERLOOSE", `(?:${src[t.NONNUMERICIDENTIFIER]}|${src[t.NUMERICIDENTIFIERLOOSE]})`);
+    createToken("PRERELEASE", `(?:-(${src[t.PRERELEASEIDENTIFIER]}(?:\\.${src[t.PRERELEASEIDENTIFIER]})*))`);
+    createToken("PRERELEASELOOSE", `(?:-?(${src[t.PRERELEASEIDENTIFIERLOOSE]}(?:\\.${src[t.PRERELEASEIDENTIFIERLOOSE]})*))`);
+    createToken("BUILDIDENTIFIER", `${LETTERDASHNUMBER}+`);
+    createToken("BUILD", `(?:\\+(${src[t.BUILDIDENTIFIER]}(?:\\.${src[t.BUILDIDENTIFIER]})*))`);
+    createToken("FULLPLAIN", `v?${src[t.MAINVERSION]}${src[t.PRERELEASE]}?${src[t.BUILD]}?`);
+    createToken("FULL", `^${src[t.FULLPLAIN]}$`);
+    createToken("LOOSEPLAIN", `[v=\\s]*${src[t.MAINVERSIONLOOSE]}${src[t.PRERELEASELOOSE]}?${src[t.BUILD]}?`);
+    createToken("LOOSE", `^${src[t.LOOSEPLAIN]}$`);
+    createToken("GTLT", "((?:<|>)?=?)");
+    createToken("XRANGEIDENTIFIERLOOSE", `${src[t.NUMERICIDENTIFIERLOOSE]}|x|X|\\*`);
+    createToken("XRANGEIDENTIFIER", `${src[t.NUMERICIDENTIFIER]}|x|X|\\*`);
+    createToken("XRANGEPLAIN", `[v=\\s]*(${src[t.XRANGEIDENTIFIER]})(?:\\.(${src[t.XRANGEIDENTIFIER]})(?:\\.(${src[t.XRANGEIDENTIFIER]})(?:${src[t.PRERELEASE]})?${src[t.BUILD]}?)?)?`);
+    createToken("XRANGEPLAINLOOSE", `[v=\\s]*(${src[t.XRANGEIDENTIFIERLOOSE]})(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})(?:${src[t.PRERELEASELOOSE]})?${src[t.BUILD]}?)?)?`);
+    createToken("XRANGE", `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAIN]}$`);
+    createToken("XRANGELOOSE", `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAINLOOSE]}$`);
+    createToken("COERCEPLAIN", `${"(^|[^\\d])(\\d{1,"}${MAX_SAFE_COMPONENT_LENGTH}})(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?`);
+    createToken("COERCE", `${src[t.COERCEPLAIN]}(?:$|[^\\d])`);
+    createToken("COERCEFULL", src[t.COERCEPLAIN] + `(?:${src[t.PRERELEASE]})?(?:${src[t.BUILD]})?(?:$|[^\\d])`);
+    createToken("COERCERTL", src[t.COERCE], true);
+    createToken("COERCERTLFULL", src[t.COERCEFULL], true);
+    createToken("LONETILDE", "(?:~>?)");
+    createToken("TILDETRIM", `(\\s*)${src[t.LONETILDE]}\\s+`, true);
+    exports.tildeTrimReplace = "$1~";
+    createToken("TILDE", `^${src[t.LONETILDE]}${src[t.XRANGEPLAIN]}$`);
+    createToken("TILDELOOSE", `^${src[t.LONETILDE]}${src[t.XRANGEPLAINLOOSE]}$`);
+    createToken("LONECARET", "(?:\\^)");
+    createToken("CARETTRIM", `(\\s*)${src[t.LONECARET]}\\s+`, true);
+    exports.caretTrimReplace = "$1^";
+    createToken("CARET", `^${src[t.LONECARET]}${src[t.XRANGEPLAIN]}$`);
+    createToken("CARETLOOSE", `^${src[t.LONECARET]}${src[t.XRANGEPLAINLOOSE]}$`);
+    createToken("COMPARATORLOOSE", `^${src[t.GTLT]}\\s*(${src[t.LOOSEPLAIN]})$|^$`);
+    createToken("COMPARATOR", `^${src[t.GTLT]}\\s*(${src[t.FULLPLAIN]})$|^$`);
+    createToken("COMPARATORTRIM", `(\\s*)${src[t.GTLT]}\\s*(${src[t.LOOSEPLAIN]}|${src[t.XRANGEPLAIN]})`, true);
+    exports.comparatorTrimReplace = "$1$2$3";
+    createToken("HYPHENRANGE", `^\\s*(${src[t.XRANGEPLAIN]})\\s+-\\s+(${src[t.XRANGEPLAIN]})\\s*$`);
+    createToken("HYPHENRANGELOOSE", `^\\s*(${src[t.XRANGEPLAINLOOSE]})\\s+-\\s+(${src[t.XRANGEPLAINLOOSE]})\\s*$`);
+    createToken("STAR", "(<|>)?=?\\s*\\*");
+    createToken("GTE0", "^\\s*>=\\s*0\\.0\\.0\\s*$");
+    createToken("GTE0PRE", "^\\s*>=\\s*0\\.0\\.0-0\\s*$");
+  }
+});
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/parse-options.js
+var require_parse_options = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/parse-options.js"(exports, module2) {
+    "use strict";
+    var looseOption = Object.freeze({ loose: true });
+    var emptyOpts = Object.freeze({});
+    var parseOptions = (options2) => {
+      if (!options2) {
+        return emptyOpts;
+      }
+      if (typeof options2 !== "object") {
+        return looseOption;
+      }
+      return options2;
+    };
+    module2.exports = parseOptions;
+  }
+});
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/identifiers.js
+var require_identifiers = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/internal/identifiers.js"(exports, module2) {
+    "use strict";
+    var numeric = /^[0-9]+$/;
+    var compareIdentifiers = (a, b) => {
+      if (typeof a === "number" && typeof b === "number") {
+        return a === b ? 0 : a < b ? -1 : 1;
+      }
+      const anum = numeric.test(a);
+      const bnum = numeric.test(b);
+      if (anum && bnum) {
+        a = +a;
+        b = +b;
+      }
+      return a === b ? 0 : anum && !bnum ? -1 : bnum && !anum ? 1 : a < b ? -1 : 1;
+    };
+    var rcompareIdentifiers = (a, b) => compareIdentifiers(b, a);
+    module2.exports = {
+      compareIdentifiers,
+      rcompareIdentifiers
+    };
+  }
+});
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/classes/semver.js
+var require_semver = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/classes/semver.js"(exports, module2) {
+    "use strict";
+    var debug = require_debug();
+    var { MAX_LENGTH, MAX_SAFE_INTEGER } = require_constants();
+    var { safeRe: re, t } = require_re();
+    var parseOptions = require_parse_options();
+    var { compareIdentifiers } = require_identifiers();
+    var isPrereleaseIdentifier = (prerelease2, identifier) => {
+      const identifiers = identifier.split(".");
+      if (identifiers.length > prerelease2.length) {
+        return false;
+      }
+      for (let i = 0; i < identifiers.length; i++) {
+        if (compareIdentifiers(prerelease2[i], identifiers[i]) !== 0) {
+          return false;
+        }
+      }
+      return true;
+    };
+    var SemVer = class _SemVer {
+      constructor(version, options2) {
+        options2 = parseOptions(options2);
+        if (version instanceof _SemVer) {
+          if (version.loose === !!options2.loose && version.includePrerelease === !!options2.includePrerelease) {
+            return version;
+          } else {
+            version = version.version;
+          }
+        } else if (typeof version !== "string") {
+          throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`);
+        }
+        if (version.length > MAX_LENGTH) {
+          throw new TypeError(
+            `version is longer than ${MAX_LENGTH} characters`
+          );
+        }
+        debug("SemVer", version, options2);
+        this.options = options2;
+        this.loose = !!options2.loose;
+        this.includePrerelease = !!options2.includePrerelease;
+        const m = version.trim().match(options2.loose ? re[t.LOOSE] : re[t.FULL]);
+        if (!m) {
+          throw new TypeError(`Invalid Version: ${version}`);
+        }
+        this.raw = version;
+        this.major = +m[1];
+        this.minor = +m[2];
+        this.patch = +m[3];
+        if (this.major > MAX_SAFE_INTEGER || this.major < 0) {
+          throw new TypeError("Invalid major version");
+        }
+        if (this.minor > MAX_SAFE_INTEGER || this.minor < 0) {
+          throw new TypeError("Invalid minor version");
+        }
+        if (this.patch > MAX_SAFE_INTEGER || this.patch < 0) {
+          throw new TypeError("Invalid patch version");
+        }
+        if (!m[4]) {
+          this.prerelease = [];
+        } else {
+          this.prerelease = m[4].split(".").map((id) => {
+            if (/^[0-9]+$/.test(id)) {
+              const num = +id;
+              if (num >= 0 && num < MAX_SAFE_INTEGER) {
+                return num;
+              }
+            }
+            return id;
+          });
+        }
+        this.build = m[5] ? m[5].split(".") : [];
+        this.format();
+      }
+      format() {
+        this.version = `${this.major}.${this.minor}.${this.patch}`;
+        if (this.prerelease.length) {
+          this.version += `-${this.prerelease.join(".")}`;
+        }
+        return this.version;
+      }
+      toString() {
+        return this.version;
+      }
+      compare(other) {
+        debug("SemVer.compare", this.version, this.options, other);
+        if (!(other instanceof _SemVer)) {
+          if (typeof other === "string" && other === this.version) {
+            return 0;
+          }
+          other = new _SemVer(other, this.options);
+        }
+        if (other.version === this.version) {
+          return 0;
+        }
+        return this.compareMain(other) || this.comparePre(other);
+      }
+      compareMain(other) {
+        if (!(other instanceof _SemVer)) {
+          other = new _SemVer(other, this.options);
+        }
+        if (this.major < other.major) {
+          return -1;
+        }
+        if (this.major > other.major) {
+          return 1;
+        }
+        if (this.minor < other.minor) {
+          return -1;
+        }
+        if (this.minor > other.minor) {
+          return 1;
+        }
+        if (this.patch < other.patch) {
+          return -1;
+        }
+        if (this.patch > other.patch) {
+          return 1;
+        }
+        return 0;
+      }
+      comparePre(other) {
+        if (!(other instanceof _SemVer)) {
+          other = new _SemVer(other, this.options);
+        }
+        if (this.prerelease.length && !other.prerelease.length) {
+          return -1;
+        } else if (!this.prerelease.length && other.prerelease.length) {
+          return 1;
+        } else if (!this.prerelease.length && !other.prerelease.length) {
+          return 0;
+        }
+        let i = 0;
+        do {
+          const a = this.prerelease[i];
+          const b = other.prerelease[i];
+          debug("prerelease compare", i, a, b);
+          if (a === void 0 && b === void 0) {
+            return 0;
+          } else if (b === void 0) {
+            return 1;
+          } else if (a === void 0) {
+            return -1;
+          } else if (a === b) {
+            continue;
+          } else {
+            return compareIdentifiers(a, b);
+          }
+        } while (++i);
+      }
+      compareBuild(other) {
+        if (!(other instanceof _SemVer)) {
+          other = new _SemVer(other, this.options);
+        }
+        let i = 0;
+        do {
+          const a = this.build[i];
+          const b = other.build[i];
+          debug("build compare", i, a, b);
+          if (a === void 0 && b === void 0) {
+            return 0;
+          } else if (b === void 0) {
+            return 1;
+          } else if (a === void 0) {
+            return -1;
+          } else if (a === b) {
+            continue;
+          } else {
+            return compareIdentifiers(a, b);
+          }
+        } while (++i);
+      }
+      // preminor will bump the version up to the next minor release, and immediately
+      // down to pre-release. premajor and prepatch work the same way.
+      inc(release, identifier, identifierBase) {
+        if (release.startsWith("pre")) {
+          if (!identifier && identifierBase === false) {
+            throw new Error("invalid increment argument: identifier is empty");
+          }
+          if (identifier) {
+            const match = `-${identifier}`.match(this.options.loose ? re[t.PRERELEASELOOSE] : re[t.PRERELEASE]);
+            if (!match || match[1] !== identifier) {
+              throw new Error(`invalid identifier: ${identifier}`);
+            }
+          }
+        }
+        switch (release) {
+          case "premajor":
+            this.prerelease.length = 0;
+            this.patch = 0;
+            this.minor = 0;
+            this.major++;
+            this.inc("pre", identifier, identifierBase);
+            break;
+          case "preminor":
+            this.prerelease.length = 0;
+            this.patch = 0;
+            this.minor++;
+            this.inc("pre", identifier, identifierBase);
+            break;
+          case "prepatch":
+            this.prerelease.length = 0;
+            this.inc("patch", identifier, identifierBase);
+            this.inc("pre", identifier, identifierBase);
+            break;
+          // If the input is a non-prerelease version, this acts the same as
+          // prepatch.
+          case "prerelease":
+            if (this.prerelease.length === 0) {
+              this.inc("patch", identifier, identifierBase);
+            }
+            this.inc("pre", identifier, identifierBase);
+            break;
+          case "release":
+            if (this.prerelease.length === 0) {
+              throw new Error(`version ${this.raw} is not a prerelease`);
+            }
+            this.prerelease.length = 0;
+            break;
+          case "major":
+            if (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) {
+              this.major++;
+            }
+            this.minor = 0;
+            this.patch = 0;
+            this.prerelease = [];
+            break;
+          case "minor":
+            if (this.patch !== 0 || this.prerelease.length === 0) {
+              this.minor++;
+            }
+            this.patch = 0;
+            this.prerelease = [];
+            break;
+          case "patch":
+            if (this.prerelease.length === 0) {
+              this.patch++;
+            }
+            this.prerelease = [];
+            break;
+          // This probably shouldn't be used publicly.
+          // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
+          case "pre": {
+            const base = Number(identifierBase) ? 1 : 0;
+            if (this.prerelease.length === 0) {
+              this.prerelease = [base];
+            } else {
+              let i = this.prerelease.length;
+              while (--i >= 0) {
+                if (typeof this.prerelease[i] === "number") {
+                  this.prerelease[i]++;
+                  i = -2;
+                }
+              }
+              if (i === -1) {
+                if (identifier === this.prerelease.join(".") && identifierBase === false) {
+                  throw new Error("invalid increment argument: identifier already exists");
+                }
+                this.prerelease.push(base);
+              }
+            }
+            if (identifier) {
+              let prerelease2 = [identifier, base];
+              if (identifierBase === false) {
+                prerelease2 = [identifier];
+              }
+              if (isPrereleaseIdentifier(this.prerelease, identifier)) {
+                const prereleaseBase = this.prerelease[identifier.split(".").length];
+                if (isNaN(prereleaseBase)) {
+                  this.prerelease = prerelease2;
+                }
+              } else {
+                this.prerelease = prerelease2;
+              }
+            }
+            break;
+          }
+          default:
+            throw new Error(`invalid increment argument: ${release}`);
+        }
+        this.raw = this.format();
+        if (this.build.length) {
+          this.raw += `+${this.build.join(".")}`;
+        }
+        return this;
+      }
+    };
+    module2.exports = SemVer;
+  }
+});
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/functions/parse.js
+var require_parse = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/functions/parse.js"(exports, module2) {
+    "use strict";
+    var SemVer = require_semver();
+    var parse2 = (version, options2, throwErrors = false) => {
+      if (version instanceof SemVer) {
+        return version;
+      }
+      try {
+        return new SemVer(version, options2);
+      } catch (er) {
+        if (!throwErrors) {
+          return null;
+        }
+        throw er;
+      }
+    };
+    module2.exports = parse2;
+  }
+});
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/functions/valid.js
+var require_valid = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/functions/valid.js"(exports, module2) {
+    "use strict";
+    var parse2 = require_parse();
+    var valid2 = (version, options2) => {
+      const v = parse2(version, options2);
+      return v ? v.version : null;
+    };
+    module2.exports = valid2;
+  }
+});
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/functions/compare.js
+var require_compare = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/functions/compare.js"(exports, module2) {
+    "use strict";
+    var SemVer = require_semver();
+    var compare2 = (a, b, loose) => new SemVer(a, loose).compare(new SemVer(b, loose));
+    module2.exports = compare2;
+  }
+});
+
+// node_modules/.pnpm/semver@7.8.6/node_modules/semver/functions/prerelease.js
+var require_prerelease = __commonJS({
+  "node_modules/.pnpm/semver@7.8.6/node_modules/semver/functions/prerelease.js"(exports, module2) {
+    "use strict";
+    var parse2 = require_parse();
+    var prerelease2 = (version, options2) => {
+      const parsed = parse2(version, options2);
+      return parsed && parsed.prerelease.length ? parsed.prerelease : null;
+    };
+    module2.exports = prerelease2;
+  }
+});
 
 // node_modules/.pnpm/jszip@3.10.2/node_modules/jszip/dist/jszip.min.js
 var require_jszip_min = __commonJS({
@@ -2427,7 +2979,7 @@ async function api(action, input = {}, method = "GET", signal) {
 }
 
 // native/ui-update.ts
-var uiBuild = "a046bd2e-d9e2-4d40-8285-555d730e5fbc";
+var uiBuild = "ff2b254a-bdc6-479e-ab22-92054631f59a";
 var moduleId = true ? "@local/redflow-workbench" : "@local/redflow-workbench";
 var nextBillingBuild = /* @__PURE__ */ Symbol.for("@local/redflow-workbench:resume-billing");
 var resumeKey = /* @__PURE__ */ Symbol.for("@local/redflow-workbench:resume-reading");
@@ -2484,9 +3036,11 @@ function installPluginUpdates(ctx) {
 }
 
 // public-update.js
+var import_valid = __toESM(require_valid(), 1);
+var import_compare = __toESM(require_compare(), 1);
+var import_prerelease = __toESM(require_prerelease(), 1);
 var publicRepository = "https://github.com/xuanqing-95/pipeline-xhs-harness-downloads";
 var npmPackageName = "dsh-pipeline-xhs";
-var versionPattern = /^0\.5\.4-beta\.(0|[1-9]\d{0,4})(?:\.(0|[1-9]\d{0,4}))?$/;
 function isPublicGitSource(source) {
   return /^(?:github:|(?:git\+)?https:\/\/github\.com\/)xuanqing-95\/pipeline-xhs-harness-downloads(?:\.git)?#[a-f0-9]{40}$/i.test(source);
 }
@@ -2495,10 +3049,7 @@ function publicGitSpec(commit) {
   return "git+" + publicRepository + ".git#" + commit;
 }
 function comparePublicVersions(left, right) {
-  const a = versionPattern.exec(left);
-  const b = versionPattern.exec(right);
-  if (!a || !b) return NaN;
-  return Number(a[1]) - Number(b[1]) || Number(a[2] ?? -1) - Number(b[2] ?? -1);
+  return (0, import_valid.default)(left) && (0, import_valid.default)(right) ? (0, import_compare.default)(left, right) : NaN;
 }
 
 // native/public-plugin-update.ts
@@ -2525,7 +3076,7 @@ function writeSetting(key, value) {
   } catch {
   }
 }
-var installedVersion = "0.5.4-beta.56";
+var installedVersion = "0.5.4-beta.57";
 var installGuide = publicRepository + "#\u5728-harness-\u91CC\u5B89\u88C5";
 var snapshot = {
   release: null,
@@ -2561,10 +3112,10 @@ function compatibleInstall(bundle) {
   if (bundleName === npmPackageName) return bundle?.installed === true && bundle.update === "registry";
   return bundle?.installed === true && bundle.update === "git" && isPublicGitSource(bundle.source);
 }
-async function registryUpdate(target) {
+async function registryUpdate(target, installed) {
   const listing = hostValue(await target.listVersions(npmPackageName, {}));
   if (listing.status !== "listed") throw new Error("\u6682\u65F6\u65E0\u6CD5\u8BFB\u53D6 npm \u7248\u672C");
-  const next = listing.versions.find((item) => item.bundle && !item.deprecated && !item.incompatible && item.tags.includes("latest"));
+  const next = listing.versions.find((item) => item.bundle && !item.deprecated && !item.incompatible && item.tags.includes("latest") && comparePublicVersions(item.version, installed) > 0);
   return next ? { version: next.version, registry: listing.registry } : null;
 }
 async function checkPublicUpdate(manual = false) {
@@ -2579,7 +3130,7 @@ async function checkPublicUpdate(manual = false) {
     let release;
     if (bundleName === npmPackageName) {
       if (!target || !compatibleInstall(bundle)) throw new Error("\u6CA1\u6709\u53EF\u66F4\u65B0\u7684 npm \u5B89\u88C5");
-      release = await registryUpdate(target);
+      release = await registryUpdate(target, installed);
     } else {
       const next = await api("public-update");
       release = /^[a-f0-9]{40}$/.test(next?.commit) && comparePublicVersions(next?.version, installed) > 0 ? next : null;
