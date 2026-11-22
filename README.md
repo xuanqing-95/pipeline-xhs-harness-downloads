@@ -13,20 +13,20 @@
 
 3. 安装完成后点 **立即启用**，从左侧打开 **Pipeline｜小红书内容生成**。
 
-Mac 和 Windows 都用这个名字。打开插件后，如果看到「发现新版」，点 **立即更新** 即可。
+Mac 和 Windows 都用这个名字。后续更新在 Harness 的「插件」详情页办理。
 
 全新安装的 Harness 可以直接按上面的短包名安装。已经添加作者或 DSHDesk 社区索引的用户，也可以在「发现」搜索 **小红书内容生成**，打开插件卡片安装。[Harness 官方插件索引说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/plugin-market.zh.md)
 
 ### 自动更新
 
-想让插件在空闲时自行更新，可以在 **使用指南 → 插件更新** 勾选 **空闲时自动更新**。这里也可以手动检查更新。
+想让插件在空闲时自行更新，可以在 **使用指南 → 插件更新** 勾选 **空闲时自动更新**。
 
-如果较早安装的插件没有显示更新入口，可以到 Harness 的「插件」页面打开 Pipeline 详情，展开「版本」并检查更新。
+在 Harness 的「插件」页面打开 Pipeline 详情。有新版时，点右上角的「更新到…」，也可以展开「版本」选择要安装的版本。
 
 <details>
 <summary>已通过 GitHub 安装，或需要 Mac 安装包</summary>
 
-通过索引安装的用户，按插件里的提醒更新即可。如果重新打开后还有提醒，再点一次更新。通过 GitHub 地址或 Mac 安装包安装的用户，可从新版提醒打开安装说明。
+通过索引安装的用户可在 Harness 插件详情页选择可用版本。使用 Mac 安装助手的用户可以下载下面的新版安装包。
 
 [作者索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json) · [GitHub 版本与备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest)
 
