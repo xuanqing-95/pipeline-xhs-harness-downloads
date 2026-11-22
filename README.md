@@ -13,12 +13,14 @@
 
 3. 安装完成后点 **立即启用**，从左侧打开 **Pipeline｜小红书内容生成**。
 
-Mac 和 Windows 使用同一个名字。适用于 DeepSeek Harness 0.2.2 系列（从 0.2.2-rc.1 起）。[在 npm 查看版本](https://www.npmjs.com/package/dsh-pipeline-xhs) · [查看 Harness 安装回执](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/download/v0.5.4-beta.56/Harness-Install-Verified.png)
+Mac 和 Windows 使用同一个名字。支持 DeepSeek Harness 0.2.2 系列，从 0.2.2-rc.1 起。[在 npm 查看版本](https://www.npmjs.com/package/dsh-pipeline-xhs) · [GitHub 正式版](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest)
+
+全新安装的 Harness 可以直接按上面的短包名安装。已经添加作者或 DSHDesk 社区索引的用户，也可以在「发现」搜索 **小红书内容生成**，打开插件卡片安装。[Harness 官方插件索引说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/plugin-market.zh.md)
 
 <details>
 <summary>安装失败，详情里出现了 0.0.0-stage</summary>
 
-回到「添加插件」，输入 `dsh-pipeline-xhs@0.5.4-beta.56`，再点「安装」。这样会下载指定版本，跳过安装器记住的旧包。以后有新版本，插件仍会提示更新。
+回到「添加插件」，输入 `dsh-pipeline-xhs@0.5.4`，再点「安装」。这样会下载指定版本，跳过安装器记住的旧包。以后有新版本，插件仍会提示更新。
 
 </details>
 
@@ -26,14 +28,14 @@ Mac 和 Windows 使用同一个名字。适用于 DeepSeek Harness 0.2.2 系列�
 
 用上面的名字安装并启用后，插件会通过 Harness 的 npm 安装源检查更新。出现提醒时点 **立即更新**。想让插件在空闲时自行更新，可以在 **使用指南 → 插件更新** 勾选 **空闲时自动更新**。这里也可以手动检查版本。
 
-已经安装 npm 首版 0.5.4-beta.55 的用户，请在 Harness 的「插件」页面打开 Pipeline 详情，展开「版本」中的新版本，勾选「显示预发布版本」，更新到 0.5.4-beta.56。之后可以在 Pipeline 里接收提醒。
+已用短包名安装 beta.56 的用户可以直接更新到 0.5.4。仍在 beta.55 的用户可在 Harness 的「插件」页面打开 Pipeline 详情，展开「版本」，重新检查后选择 0.5.4。
 
 <details>
 <summary>已通过 GitHub 安装，或需要 Mac 安装包</summary>
 
-通过作者索引或固定 Git 提交安装的 beta.56，可以在插件内更新。通过普通 GitHub 地址或 Mac 安装包安装的 beta.56，可以从新版提醒打开安装说明。
+通过索引或固定 Git 提交安装的 beta.56 会先收到 beta.57 提醒。按提示更新并重新加载，再次检查即可升到 0.5.4。通过普通 GitHub 地址或 Mac 安装包安装的用户，可从新版提醒打开安装说明。
 
-[作者索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json) · [GitHub 版本与备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/tag/v0.5.4-beta.56)
+[作者索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json) · [GitHub 版本与备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest)
 
 </details>
 
