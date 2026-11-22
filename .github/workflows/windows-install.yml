@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        channel: [npm, git-candidate]
+        channel: [npm, npm-upgrade, git-candidate]
     runs-on: windows-2022
     timeout-minutes: 15
     steps:

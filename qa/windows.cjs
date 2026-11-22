@@ -4,9 +4,11 @@ const fs = require('node:fs');
 const delay = ms => new Promise(r => setTimeout(r, ms));
 const packageName = 'dsh-pipeline-xhs';
 const gitCandidate = process.env.QA_CHANNEL === 'git-candidate';
+const upgrade = process.env.QA_CHANNEL === 'npm-upgrade';
+const previous = '0.5.4-beta.56';
 const candidate = process.env.QA_CANDIDATE;
 if (gitCandidate && !/^[a-f0-9]{40}$/.test(candidate)) throw Error('Invalid release candidate commit');
-const source = gitCandidate ? 'https://github.com/xuanqing-95/pipeline-xhs-harness-downloads#' + candidate : packageName;
+const source = gitCandidate ? 'https://github.com/xuanqing-95/pipeline-xhs-harness-downloads#' + candidate : upgrade ? packageName+'@'+previous : packageName;
 const out = 'qa/evidence';
 fs.mkdirSync(out,{recursive:true});
 const child = spawn(process.env.DSH_TEST_EXE,['--remote-debugging-port=9333','--lang=en-US'],{stdio:'ignore'});
@@ -17,9 +19,11 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
 (async()=>{
  const metadata = await fetch(gitCandidate
    ? 'https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/' + candidate + '/package.json'
-   : 'https://registry.npmjs.org/' + packageName + '/latest');
+   : 'https://registry.npmjs.org/' + packageName);
  if (!metadata.ok) throw Error('Cannot resolve the expected plugin version');
- const {version} = await metadata.json();
+ const manifest = await metadata.json();
+ const latest = gitCandidate ? manifest.version : manifest['dist-tags'].latest;
+ const version = upgrade ? previous : latest;
  report('Testing install of ' + source + ' ' + version);
  for(let i=0;i<100&&!browser;i++){
    try{browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:1500});}catch{await delay(1200);}
@@ -65,6 +69,21 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
     if(await visible(confirm))await confirm.last().click();
    }
    if(stage==='open' && await visible(pg.locator('input[type=password]')) && /Pipeline/.test(body)){
+    if (upgrade) {
+      await pg.getByText('发现新版 ' + latest, {exact:true}).first().waitFor({timeout:45000});
+      await shot('04-update-available');
+      await pg.getByRole('button',{name:'立即更新',exact:true}).first().click();
+      const path = require('node:path');
+      const installed = path.join(process.env.DSH_HOME || path.join(require('node:os').homedir(),'.dsh'),'profiles','desktop','node_modules',packageName,'package.json');
+      for(let poll=0;poll<90;poll++){
+        if(fs.existsSync(installed) && JSON.parse(fs.readFileSync(installed)).version===latest){
+          report('PASS: Clicked the update notice and verified installed package '+previous+' -> '+latest);
+          return;
+        }
+        await delay(1000);
+      }
+      throw Error('Update button did not install '+latest);
+    }
     await shot('04-plugin-open');fs.writeFileSync(out+'/result.json',JSON.stringify({platform:process.platform,source,version,result:'installed, enabled and opened via Windows desktop UI'}));report('PASS: Installed ' + source + ' ' + version + ' and opened plugin login');return;
    }
   }
