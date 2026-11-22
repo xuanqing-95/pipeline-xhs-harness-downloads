@@ -24,7 +24,7 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
  const latest = gitCandidate ? manifest.version : manifest['dist-tags'].latest;
  const exact = process.env.QA_CHANNEL === 'npm-exact';
  const source = gitCandidate ? 'https://github.com/xuanqing-95/pipeline-xhs-harness-downloads#' + candidate : (upgrade || exact) ? packageName+'@'+(upgrade ? previous : latest) : packageName;
- let version = upgrade ? previous : latest;
+ const version = upgrade ? previous : latest;
  report('Testing install of ' + source + ' ' + version);
  for(let i=0;i<100&&!browser;i++){
    try{browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:1500});}catch{await delay(1200);}
@@ -57,14 +57,6 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
     const enable=pg.getByRole('button',{name:/^(Enable now|立即启用|现在启用)$/i});
     if(await visible(enable)){
       // The completed receipt and its version can render just after the progress view.
-      const age = Date.now() - Date.parse(manifest.time?.[latest]);
-      if (process.env.QA_CHANNEL === 'npm' && age >= 0 && age < 86400000) {
-        // During pnpm's first-day window the short name can resolve to the previous build.
-        const label = await pg.getByText(/^(?:Version|版本)\s*\d+\.\d+\.\d+(?:-[\w.]+)?$/i).last().innerText({timeout:10000});
-        version = label.replace(/^(?:Version|版本)\s*/i,'');
-        if (![previous,latest].includes(version)) throw Error('Unexpected short-name version '+version);
-        report('First-day short-name receipt: '+version);
-      }
       const versionLabel = new RegExp('^(?:Version|版本)\\s*' + version.replaceAll('.', '\\.') + '$', 'i');
       await pg.getByText(versionLabel).first().waitFor({state:'visible',timeout:10000});
       await shot('02-installed');await enable.first().click();stage='enabled';continue;
@@ -78,7 +70,7 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
     if(await visible(confirm))await confirm.last().click();
    }
    if(stage==='open' && await visible(pg.locator('input[type=password]')) && /Pipeline/.test(body)){
-    if (upgrade || version !== latest) {
+    if (upgrade) {
       await pg.getByText('发现新版 ' + latest, {exact:true}).first().waitFor({timeout:45000});
       await shot('04-update-available');
       await pg.getByRole('button',{name:'立即更新',exact:true}).first().click();
