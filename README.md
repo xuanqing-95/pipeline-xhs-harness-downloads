@@ -20,7 +20,7 @@ Mac 和 Windows 使用同一个名字。支持 DeepSeek Harness 0.2.2 系列，�
 <details>
 <summary>安装失败，详情里出现了 0.0.0-stage</summary>
 
-回到「添加插件」，输入 `dsh-pipeline-xhs@0.5.4`，再点「安装」。这样会下载指定版本，跳过安装器记住的旧包。以后有新版本，插件仍会提示更新。
+在「添加插件」输入短包名、一个 `@` 和 npm 版本页中标为 **latest** 的完整版本号，再点「安装」。例如，指定 beta.56 时输入 `dsh-pipeline-xhs@0.5.4-beta.56`。这样能跳过安装器记住的旧包，之后仍会收到更新提醒。[查看 npm 版本](https://www.npmjs.com/package/dsh-pipeline-xhs?activeTab=versions)
 
 </details>
 
@@ -28,7 +28,7 @@ Mac 和 Windows 使用同一个名字。支持 DeepSeek Harness 0.2.2 系列，�
 
 用上面的名字安装并启用后，插件会通过 Harness 的 npm 安装源检查更新。出现提醒时点 **立即更新**。想让插件在空闲时自行更新，可以在 **使用指南 → 插件更新** 勾选 **空闲时自动更新**。这里也可以手动检查版本。
 
-已用短包名安装 beta.56 的用户可以直接更新到 0.5.4。仍在 beta.55 的用户可在 Harness 的「插件」页面打开 Pipeline 详情，展开「版本」，重新检查后选择 0.5.4。
+已用短包名安装 beta.56 的用户，会在 npm 提供更新后收到插件内提醒。仍在 beta.55 的用户可在 Harness 的「插件」页面打开 Pipeline 详情，展开「版本」，重新检查并选择新的兼容版本。
 
 <details>
 <summary>已通过 GitHub 安装，或需要 Mac 安装包</summary>
