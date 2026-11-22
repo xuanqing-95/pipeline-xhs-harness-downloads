@@ -1,4 +1,4 @@
-/* redflow-ui-build: ff2b254a-bdc6-479e-ab22-92054631f59a */
+/* redflow-ui-build: 3aa708d2-63ec-45f0-b85f-4b5565da7b6c */
 window.__ModuleLoader__.load({id:"@local/redflow-workbench",factory(require){
 const module={exports:{}};const exports=module.exports;
 var __create = Object.create;
@@ -2979,7 +2979,7 @@ async function api(action, input = {}, method = "GET", signal) {
 }
 
 // native/ui-update.ts
-var uiBuild = "ff2b254a-bdc6-479e-ab22-92054631f59a";
+var uiBuild = "3aa708d2-63ec-45f0-b85f-4b5565da7b6c";
 var moduleId = true ? "@local/redflow-workbench" : "@local/redflow-workbench";
 var nextBillingBuild = /* @__PURE__ */ Symbol.for("@local/redflow-workbench:resume-billing");
 var resumeKey = /* @__PURE__ */ Symbol.for("@local/redflow-workbench:resume-reading");
@@ -3076,7 +3076,7 @@ function writeSetting(key, value) {
   } catch {
   }
 }
-var installedVersion = "0.5.4-beta.57";
+var installedVersion = "0.5.4";
 var installGuide = publicRepository + "#\u5728-harness-\u91CC\u5B89\u88C5";
 var snapshot = {
   release: null,
@@ -24657,13 +24657,13 @@ function NativeGuidePage() {
   return /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("div", { "data-rf-reading": "/workspace/guide", className: "max-w-5xl mx-auto p-6 space-y-6", children: [
     /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("h1", { className: "iwt-app-title", children: "\u4F7F\u7528\u6307\u5357" }),
     /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(PluginUpdateNotice, { settings: true }),
-    /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u8FD9\u91CC\u662F\u300CPipeline\uFF5C\u5C0F\u7EA2\u4E66\u5185\u5BB9\u751F\u6210\u300D\u7684 Harness \u8BD5\u7528\u7248\u3002\u4F7F\u7528\u4F60\u81EA\u5DF1\u7684 Pipeline \u8D26\u53F7\uFF0C\u7F51\u7AD9\u4E0E\u63D2\u4EF6\u5171\u4EAB\u54C1\u724C\u3001\u5185\u5BB9\u548C\u79EF\u5206\u3002" }),
+    /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u4F7F\u7528\u81EA\u5DF1\u7684 Pipeline \u8D26\u53F7\u767B\u5F55\uFF0C\u5C31\u80FD\u5728 Harness \u91CC\u4F7F\u7528\u7F51\u7AD9\u4E0A\u7684\u54C1\u724C\u3001\u5185\u5BB9\u548C\u79EF\u5206\u3002" }),
     /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("section", { className: "iwt-card p-6 space-y-3", children: [
       /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("h2", { className: "text-lg font-semibold", children: "\u7B2C\u4E00\u6B21\u4F7F\u7528" }),
       /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("ol", { className: "list-decimal pl-5 space-y-3", children: [
         /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("li", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Link, { className: "underline", to: "/workspace/brands", children: "\u521B\u5EFA\u4E00\u4E2A\u6D4B\u8BD5\u54C1\u724C" }),
-          "\uFF0C\u586B\u5199\u5B9A\u4F4D\u4E0E\u5199\u4F5C\u98CE\u683C\uFF0C\u4E5F\u53EF\u7528 AI \u63D0\u53D6\u53C2\u6570\u3002\u65B0\u8D26\u53F7\u7684\u7B2C\u4E00\u4E2A\u54C1\u724C\u4F1A\u4F5C\u4E3A\u9ED8\u8BA4\u54C1\u724C\uFF1B\u5DF2\u6709\u8D26\u53F7\u6CBF\u7528\u7F51\u7AD9\u7684\u9ED8\u8BA4\u54C1\u724C\u3002"
+          /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Link, { className: "underline", to: "/workspace/brands", children: "\u521B\u5EFA\u54C1\u724C" }),
+          "\uFF0C\u586B\u5199\u5B9A\u4F4D\u4E0E\u5199\u4F5C\u98CE\u683C\uFF0C\u4E5F\u53EF\u7528 AI \u63D0\u53D6\u53C2\u6570\u3002\u7B2C\u4E00\u4E2A\u54C1\u724C\u4F1A\u6210\u4E3A\u9ED8\u8BA4\u54C1\u724C\u3002\u5DF2\u6709\u8D26\u53F7\u53EF\u6CBF\u7528\u7F51\u7AD9\u4E0A\u7684\u54C1\u724C\u3002"
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("li", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Link, { className: "underline", to: "/workspace/billing", children: "\u67E5\u770B\u8D26\u53F7\u79EF\u5206" }),
@@ -24671,7 +24671,7 @@ function NativeGuidePage() {
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("li", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Link, { className: "underline", to: "/workspace/create", children: "\u6253\u5F00\u539F\u521B\u521B\u4F5C" }),
-          "\uFF0C\u8F93\u5165\u4E3B\u9898\u5E76\u9009\u62E9\u6280\u80FD\uFF0C\u786E\u8BA4\u8F93\u5165\u4E0E\u6280\u80FD\u540E\u70B9\u51FB\u751F\u6210\uFF1B\u5C06\u76F4\u63A5\u63D0\u4EA4\u5E76\u4F7F\u7528\u8D26\u53F7\u79EF\u5206\u3002\u6536\u85CF\u91C7\u96C6\u4ECD\u4F7F\u7528 Pipeline \u6D4F\u89C8\u5668\u6269\u5C55\uFF0C\u63D2\u4EF6\u4E2D\u53EF\u7BA1\u7406\u5DF2\u540C\u6B65\u7684\u6536\u85CF\u3002"
+          "\u3002\u60F3\u5148\u719F\u6089\u5DE5\u4F5C\u53F0\uFF0C\u53EF\u4EE5\u5207\u5230\u300C\u4F53\u9A8C\u6A21\u5F0F\u300D\uFF0C\u6D88\u8017 0 \u79EF\u5206\u3002\u5728\u300C\u6B63\u5F0F\u6A21\u5F0F\u300D\u8F93\u5165\u8349\u7A3F\uFF0C\u9009\u597D\u4E13\u5BB6\u540E\u5373\u53EF\u751F\u6210\uFF0C\u6309\u5B9E\u9645\u7528\u91CF\u8BA1\u8D39\u3002"
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("li", { children: [
           "\u5728",
@@ -24683,16 +24683,14 @@ function NativeGuidePage() {
       ] })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("section", { className: "iwt-card p-6 space-y-3", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("h2", { className: "text-lg font-semibold", children: "\u8BD5\u7528\u8303\u56F4" }),
-      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u5DF2\u63A5\u5165\u6536\u85CF\u5E93\u3001\u539F\u521B\u521B\u4F5C\u3001\u4EFB\u52A1\u6C60\u3001\u54C1\u724C\u5207\u6362\u3001AI \u63D0\u53D6\u3001\u521B\u5EFA\u548C\u7F16\u8F91\u3001\u79EF\u5206\u4E0E\u64CD\u4F5C\u8BB0\u5F55\u3002\u9996\u6B21\u771F\u5B9E\u751F\u6210\u4ECD\u9700\u8981\u8BD5\u7528\u9A8C\u6536\u3002" }),
-      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u54C1\u724C\u3001\u6536\u85CF\u548C\u4EFB\u52A1\u7684\u5220\u9664\u6CBF\u7528\u539F\u7248\u786E\u8BA4\u5F39\u7A97\uFF1B\u6761\u6F2B\u53EF\u8BBE\u7F6E\u98CE\u683C\u3001\u683C\u6570\u3001\u8D28\u91CF\u548C\u7CFB\u5217\u53C2\u8003\u56FE\u3002\u6536\u85CF\u4E0E\u4EFB\u52A1\u6309\u9875\u52A0\u8F7D\uFF0C\u9875\u9762\u6570\u91CF\u548C\u641C\u7D22\u4EC5\u8986\u76D6\u5DF2\u52A0\u8F7D\u5185\u5BB9\u3002" }),
-      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u8FD9\u91CC\u7684\u4FDD\u5B58\u4E0E\u751F\u6210\u4F1A\u5F71\u54CD\u4F60\u7684\u771F\u5B9E Pipeline \u8D26\u53F7\uFF1B\u8BF7\u4F7F\u7528\u81EA\u5DF1\u7684\u6D4B\u8BD5\u5185\u5BB9\u3002\u7F51\u7AD9\u4ECD\u53EF\u72EC\u7ACB\u4F7F\u7528\uFF1B\u91C7\u96C6\u6269\u5C55\u9700\u8981\u524D\u5F80\u7F51\u7AD9\u3002" })
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("h2", { className: "text-lg font-semibold", children: "\u6536\u85CF\u4E0E\u914D\u56FE" }),
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u7528 Pipeline \u6D4F\u89C8\u5668\u6269\u5C55\u91C7\u96C6\u6536\u85CF\u540E\uFF0C\u53EF\u4EE5\u5728\u63D2\u4EF6\u7684\u6536\u85CF\u5E93\u91CC\u627E\u5230\u53C2\u8003\u7B14\u8BB0\u5E76\u53D1\u8D77\u4EFF\u5199\u3002\u6536\u85CF\u4E0E\u4EFB\u52A1\u6309\u9875\u52A0\u8F7D\uFF0C\u641C\u7D22\u8303\u56F4\u662F\u5F53\u524D\u5DF2\u52A0\u8F7D\u7684\u5185\u5BB9\u3002" }),
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u751F\u6210\u6761\u6F2B\u65F6\uFF0C\u53EF\u4EE5\u9009\u62E9\u98CE\u683C\u3001\u683C\u6570\u3001\u8D28\u91CF\u548C\u7CFB\u5217\u53C2\u8003\u56FE\u3002\u914D\u56FE\u5B8C\u6210\u540E\u53EF\u9010\u5F20\u9884\u89C8\u6216\u6279\u91CF\u4E0B\u8F7D\u3002" })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("section", { className: "iwt-card p-6 space-y-3", children: [
       /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("h2", { className: "text-lg font-semibold", children: "\u9000\u51FA\u4E0E\u53CD\u9988" }),
       /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u4FA7\u680F\u5E95\u90E8\u7684\u9000\u51FA\u5165\u53E3\u4F1A\u65AD\u5F00\u672C\u673A\u8FDE\u63A5\uFF0C\u4E0D\u4F1A\u5220\u9664\u7F51\u7AD9\u5185\u5BB9\u3002\u5378\u8F7D\u524D\u5148\u9000\u51FA\uFF1B\u5728\u5171\u4EAB\u8BBE\u5907\u4E0A\u4E0D\u8981\u4FDD\u7559\u81EA\u5DF1\u7684\u767B\u5F55\u72B6\u6001\u3002" }),
-      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u8BF7\u628A Harness \u7248\u672C\u3001\u63D2\u4EF6\u7248\u672C\u3001\u64CD\u4F5C\u6B65\u9AA4\u4E0E\u9519\u8BEF\u63D0\u793A\u53D1\u7ED9\u9080\u8BF7\u4F60\u8BD5\u7528\u7684\u4F5C\u8005\u3002\u4E0D\u8981\u53D1\u9001\u5BC6\u7801\u3001\u767B\u5F55\u51ED\u636E\u6216\u542B\u4E2A\u4EBA\u5185\u5BB9\u7684\u5B8C\u6574\u65E5\u5FD7\u3002" }),
-      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u7531\u7384\u6E05\u7EF4\u62A4\u3002\u53EF\u4ECE\u4F5C\u8005\u7684\u4E0B\u8F7D\u4ED3\u5E93\u5B89\u88C5\uFF1B\u5E73\u53F0\u540D\u79F0\u4EC5\u8BF4\u660E\u517C\u5BB9\u6027\uFF0C\u4E0D\u8868\u793A\u5B98\u65B9\u8BA4\u8BC1\u3002" })
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("p", { children: "\u53CD\u9988\u95EE\u9898\u65F6\uFF0C\u8BF7\u63D0\u4F9B Harness \u7248\u672C\u3001\u63D2\u4EF6\u7248\u672C\u3001\u64CD\u4F5C\u6B65\u9AA4\u548C\u5DF2\u906E\u6321\u4E2A\u4EBA\u4FE1\u606F\u7684\u9519\u8BEF\u63D0\u793A\u3002" })
     ] })
   ] });
 }
