@@ -13,29 +13,20 @@
 
 3. 安装完成后点 **立即启用**，从左侧打开 **Pipeline｜小红书内容生成**。
 
-新版发布后的前 24 小时，只填短包名可能会先装到上一版。想直接装正式版 **0.5.4**，可以在同一个输入框填 `dsh-pipeline-xhs@0.5.4`。已经装了 beta.56 的用户，打开插件看到「发现新版 0.5.4」时，点 **立即更新** 即可。
-
-Mac 和 Windows 使用同一个名字。支持 DeepSeek Harness 0.2.2 系列，从 0.2.2-rc.1 起。[在 npm 查看版本](https://www.npmjs.com/package/dsh-pipeline-xhs) · [GitHub 正式版](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest)
+Mac 和 Windows 都用这个名字。打开插件后，如果看到「发现新版」，点 **立即更新** 即可。
 
 全新安装的 Harness 可以直接按上面的短包名安装。已经添加作者或 DSHDesk 社区索引的用户，也可以在「发现」搜索 **小红书内容生成**，打开插件卡片安装。[Harness 官方插件索引说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/plugin-market.zh.md)
 
-<details>
-<summary>安装失败，详情里出现了 0.0.0-stage</summary>
+### 自动更新
 
-在「添加插件」输入短包名、一个 `@` 和 npm 版本页中标为 **latest** 的完整版本号，再点「安装」。例如，指定 0.5.4 时输入 `dsh-pipeline-xhs@0.5.4`。之后仍会收到更新提醒。[查看 npm 版本](https://www.npmjs.com/package/dsh-pipeline-xhs?activeTab=versions)
+想让插件在空闲时自行更新，可以在 **使用指南 → 插件更新** 勾选 **空闲时自动更新**。这里也可以手动检查更新。
 
-</details>
-
-### 收到新版时
-
-用上面的名字安装并启用后，插件会通过 Harness 的 npm 安装源检查更新。出现提醒时点 **立即更新**。想让插件在空闲时自行更新，可以在 **使用指南 → 插件更新** 勾选 **空闲时自动更新**。这里也可以手动检查版本。
-
-已用短包名安装 beta.56 的用户，会在 npm 提供更新后收到插件内提醒。仍在 beta.55 的用户可在 Harness 的「插件」页面打开 Pipeline 详情，展开「版本」，重新检查并选择新的兼容版本。
+如果较早安装的插件没有显示更新入口，可以到 Harness 的「插件」页面打开 Pipeline 详情，展开「版本」并检查更新。
 
 <details>
 <summary>已通过 GitHub 安装，或需要 Mac 安装包</summary>
 
-通过索引或固定 Git 提交安装的 beta.56 会先收到 beta.57 提醒。按提示更新并重新加载，再次检查即可升到 0.5.4。通过普通 GitHub 地址或 Mac 安装包安装的用户，可从新版提醒打开安装说明。
+通过索引安装的用户，按插件里的提醒更新即可。如果重新打开后还有提醒，再点一次更新。通过 GitHub 地址或 Mac 安装包安装的用户，可从新版提醒打开安装说明。
 
 [作者索引](https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/main/index.json) · [GitHub 版本与备用安装包](https://github.com/xuanqing-95/pipeline-xhs-harness-downloads/releases/latest)
 
