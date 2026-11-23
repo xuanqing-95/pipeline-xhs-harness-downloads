@@ -3,11 +3,14 @@ const { spawn, execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const delay = ms => new Promise(r => setTimeout(r, ms));
 const packageName = 'dsh-pipeline-xhs';
-const gitCandidate = process.env.QA_CHANNEL === 'git-candidate';
-const upgrade = process.env.QA_CHANNEL === 'npm-upgrade';
-const previous = '0.5.4-beta.56';
-const candidate = process.env.QA_CANDIDATE;
-if (gitCandidate && !/^[a-f0-9]{40}$/.test(candidate)) throw Error('Invalid release candidate commit');
+const mirror = process.env.QA_CHANNEL === 'mainland';
+const registryHost = mirror ? 'registry.npmmirror.com' : 'registry.npmjs.org';
+const version = '0.5.5';
+const source = packageName;
+const path = require('node:path');
+const profile = path.join(require('node:os').homedir(), '.dsh', 'profiles', 'desktop');
+const installedDir = path.join(profile, 'node_modules', packageName);
+if (fs.existsSync(installedDir)) throw Error('Profile already has Pipeline installed');
 const out = 'qa/evidence';
 fs.mkdirSync(out,{recursive:true});
 const child = spawn(process.env.DSH_TEST_EXE,['--remote-debugging-port=9333','--lang=en-US'],{stdio:'ignore'});
@@ -16,16 +19,7 @@ const report = msg => console.log(msg);
 async function shot(name){ await current.screenshot({path:out+'/'+name+'.png',timeout:5000}); }
 async function visible(loc){return await loc.first().isVisible().catch(()=>false);}
 (async()=>{
- const metadata = await fetch(gitCandidate
-   ? 'https://raw.githubusercontent.com/xuanqing-95/pipeline-xhs-harness-downloads/' + candidate + '/package.json'
-   : 'https://registry.npmjs.org/' + packageName);
- if (!metadata.ok) throw Error('Cannot resolve the expected plugin version');
- const manifest = await metadata.json();
- const latest = gitCandidate ? manifest.version : manifest['dist-tags'].latest;
- const exact = process.env.QA_CHANNEL === 'npm-exact';
- const source = gitCandidate ? 'https://github.com/xuanqing-95/pipeline-xhs-harness-downloads#' + candidate : (upgrade || exact) ? packageName+'@'+(upgrade ? previous : latest) : packageName;
- const version = upgrade ? previous : latest;
- report('Testing install of ' + source + ' ' + version);
+ report('Fresh Windows desktop. Testing bare name ' + source + ' via ' + registryHost);
  for(let i=0;i<100&&!browser;i++){
    try{browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:1500});}catch{await delay(1200);}
  }
@@ -47,6 +41,14 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
    if(stage==='dialog'){
     const input=pg.getByPlaceholder(/whale-pet/i);
     if(!await visible(input))continue;
+    const picker = pg.getByRole('button', {name:/^(Registry|安装源)/i}).first();
+    await picker.click();
+    const panel = pg.locator('[data-install-registry]');
+    const target = panel.locator('label').filter({hasText:mirror ? /registry[.]npmmirror[.]com|Mainland China mirror|中国大陆镜像源/i : /registry[.]npmjs[.]org|Official npm registry|npm 官方源/i}).first();
+    await target.waitFor({state:'visible',timeout:10000});
+    report('Selected source: ' + await target.innerText());
+    await target.click();
+    if(await panel.isVisible())await picker.click();
     execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command','Set-Clipboard -Value $env:QA_INSTALL_SPEC'],{env:{...process.env,QA_INSTALL_SPEC:source}});
     await input.first().focus();await input.first().press('Control+v');
     if(await input.first().inputValue()!==source)throw Error('Clipboard paste mismatch');await shot('01-add-plugin');
@@ -70,22 +72,12 @@ async function visible(loc){return await loc.first().isVisible().catch(()=>false
     if(await visible(confirm))await confirm.last().click();
    }
    if(stage==='open' && await visible(pg.locator('input[type=password]')) && /Pipeline/.test(body)){
-    if (upgrade) {
-      await pg.getByText('发现新版 ' + latest, {exact:true}).first().waitFor({timeout:45000});
-      await shot('04-update-available');
-      await pg.getByRole('button',{name:'立即更新',exact:true}).first().click();
-      const path = require('node:path');
-      const installed = path.join(process.env.DSH_HOME || path.join(require('node:os').homedir(),'.dsh'),'profiles','desktop','node_modules',packageName,'package.json');
-      for(let poll=0;poll<90;poll++){
-        if(fs.existsSync(installed) && JSON.parse(fs.readFileSync(installed)).version===latest){
-          report('PASS: Clicked the update notice and verified installed package '+previous+' -> '+latest);
-          return;
-        }
-        await delay(1000);
-      }
-      throw Error('Update button did not install '+latest);
-    }
-    await shot('04-plugin-open');fs.writeFileSync(out+'/result.json',JSON.stringify({platform:process.platform,source,version,result:'installed, enabled and opened via Windows desktop UI'}));report('PASS: Installed ' + source + ' ' + version + ' and opened plugin login');return;
+    const installedVersion = JSON.parse(fs.readFileSync(path.join(installedDir,'package.json'),'utf8')).version;
+    if(installedVersion!==version)throw Error('Actual installed version: '+installedVersion);
+    const marker = JSON.parse(fs.readFileSync(path.join(installedDir,'ui-release.json'),'utf8'));
+    const actualDigest = require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(installedDir,'client.js'))).digest('hex');
+    if(marker.moduleId!==source || marker.sha256!==actualDigest)throw Error('Client identity mismatch');
+    await shot('04-plugin-open');fs.writeFileSync(out+'/result.json',JSON.stringify({platform:process.platform,source,registryHost,installedVersion,clientSha256:actualDigest,version,result:'installed, enabled and opened via Windows desktop UI'}));report('PASS: Installed ' + source + ' ' + version + ' and opened plugin login');return;
    }
   }
   await delay(1300);
